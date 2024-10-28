@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="GameManager.UI.MainMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GameManager.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Loaded"
+    Style="{StaticResource MainMenu}">
+    <Grid>
+        <SplitView HorizontalAlignment="Stretch" IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="200"
+                   PaneBackground="Transparent">
+            <SplitView.Pane>
+                <!--SingleSelectionFollowsFocus="True"-->
+                    <ListView x:Name="SidePanel" HorizontalAlignment="Stretch"
+                          IsItemClickEnabled="True" SelectionMode="Single" 
+                          ItemClick="ItemClick" SelectionChanged="SelectionChanged"
+                          Style="{StaticResource SidePanel}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:MenuPage">
+                                <TextBlock Text="{x:Bind Name}" Style="{StaticResource PanelItem}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </SplitView.Pane>
+            <Grid x:Name="Content"/>
+        </SplitView>
+    </Grid>
+</Page>

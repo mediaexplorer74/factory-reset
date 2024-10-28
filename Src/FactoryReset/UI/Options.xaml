@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="GameManager.UI.Options"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GameManager.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Loaded"
+    Style="{StaticResource MenuPage}">
+    <ScrollViewer Margin="10,5,5,5">
+        <StackPanel HorizontalAlignment="Left" Width="200">
+            <TextBlock Text="Options" FontSize="24" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Slider x:Name="MasterVolume" Header="Master Volume" Maximum="100"
+                    ValueChanged="MasterVolume_ValueChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <Slider x:Name="SoundVolume" Header="Sound Effect Volume" Maximum="100"
+                    ValueChanged="SoundVolume_ValueChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <Slider x:Name="MusicVolume" Header="Music Volume" Maximum="100"
+                    ValueChanged="MusicVolume_ValueChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <Slider x:Name="TextSpeed" Header="Text scroll speed" Maximum="100"
+                    ValueChanged="TextSpeed_ValueChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <Slider x:Name="ScreenShake" Header="Screen Shake Strength" Maximum="100"
+                    ValueChanged="ScreenShake_ValueChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <Slider x:Name="Vibration" Header="Controller Vibration" Maximum="100"
+                    ValueChanged="Vibration_ValueChanged" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <ComboBox x:Name="TvMode" Header="TV Mode"
+                      SelectionChanged="TvMode_SelectionChanged" HorizontalAlignment="Stretch">
+                <ComboBoxItem>TV Safe</ComboBoxItem>
+                <ComboBoxItem>Full</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="Debug Options" Margin="0,20,0,0"/>
+            <CheckBox x:Name="ShowSolids" Content="Show Solids" HorizontalAlignment="Stretch"
+                      Click="ShowSolids_Click"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

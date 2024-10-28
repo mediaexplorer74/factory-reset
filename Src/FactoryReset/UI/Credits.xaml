@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="GameManager.UI.Credits"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GameManager.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Style="{StaticResource MenuPage}">
+  <ListView Style="{StaticResource Credits}">
+    <ListViewHeaderItem>Production</ListViewHeaderItem>
+    <ListViewItem>Nicolas Hafner</ListViewItem>
+
+    <ListViewHeaderItem>Game Design</ListViewHeaderItem>
+    <ListViewItem>Nicolas Hafner</ListViewItem>
+    <ListViewItem>Gengyan Li</ListViewItem>
+    <ListViewItem>Amir Hossein Heidari</ListViewItem>
+    <ListViewItem>Nicole Manojlovic</ListViewItem>
+    <ListViewItem>Pulkit Singh</ListViewItem>
+
+    <ListViewHeaderItem>Programming</ListViewHeaderItem>
+    <ListViewItem>Gengyan Li</ListViewItem>
+    <ListViewItem>Nicolas Hafner</ListViewItem>
+    <ListViewItem>Amir Hossein Heidari</ListViewItem>
+    
+    <ListViewHeaderItem>Character Design &amp; Animation</ListViewHeaderItem>
+    <ListViewItem>Nicolas Hafner</ListViewItem>
+    
+    <ListViewHeaderItem>Enemy Design &amp; Animation</ListViewHeaderItem>
+    <ListViewItem>Pulkit Singh</ListViewItem>
+    
+    <ListViewHeaderItem>Environment Design</ListViewHeaderItem>
+    <ListViewItem>Nicolas Hafner: Rooftops &amp; Office</ListViewItem>
+    <ListViewItem>Pulkit Singh: Factory</ListViewItem>
+    
+    <ListViewHeaderItem>Sound Design</ListViewHeaderItem>
+    <ListViewItem>Nicole Manojlovic</ListViewItem>
+    
+    <ListViewHeaderItem>Music</ListViewHeaderItem>
+    <ListViewItem>Nicolas Hafner</ListViewItem>
+    
+    <ListViewHeaderItem>Level Design</ListViewHeaderItem>
+    <ListViewItem>Nicole Manojlovic: Rooftops</ListViewItem>
+    <ListViewItem>Amir Hossein Heidari: Office</ListViewItem>
+    <ListViewItem>Nicolas Hafner: Factory</ListViewItem>
+    
+    <ListViewHeaderItem>Writing</ListViewHeaderItem>
+    <ListViewItem>Nicole Manojlovic</ListViewItem>
+  </ListView>
+</Page>
