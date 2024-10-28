@@ -7,40 +7,67 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Style="{StaticResource MenuPage}">
-    <Grid Margin="10,5,5,5">
+    <Grid Margin="5,2,2,2" VariableSizedWrapGrid.ColumnSpan="60" 
+          VariableSizedWrapGrid.RowSpan="60">
         <Grid.RowDefinitions>
-            <RowDefinition Height="15*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
+        <!-- 
+          Margin="10,5,5,5"
+         <RowDefinition Height="15*"/>
+ <RowDefinition Height="6*"/>
+ <RowDefinition Height="30"/>
+        -->
 
-        <!--SingleSelectionFollowsFocus="True"-->
-            <ListView ScrollViewer.HorizontalScrollMode="Enabled"
+        
+            <!-- ScrollViewer.HorizontalScrollMode="Enabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                   ScrollViewer.VerticalScrollMode="Disabled"
-                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                  IsItemClickEnabled="True" SelectionMode="Single" 
-                  x:Name="LevelList" Grid.Row="0" ItemClick="LevelSelected" 
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"   
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Bottom"
+
+          -->
+            <!--SingleSelectionFollowsFocus="True"-->
+            <GridView 
+                  IsItemClickEnabled="True" 
+                  SelectionMode="Single" 
+                  x:Name="LevelList" 
+                  Grid.Row="0" 
+                  ItemClick="LevelSelected" 
                   SelectionChanged="SelectionChanged"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
-            <ListView.ItemsPanel>
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Bottom">
+                
+            <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"></StackPanel>
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
+            </GridView.ItemsPanel>
+                
+            <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:LevelPreview">
                     <StackPanel Style="{StaticResource Level}">
                         <Image Source="{x:Bind Preview}" Style="{StaticResource LevelPreview}"/>
                         <TextBlock Text="{x:Bind Name}" Style="{StaticResource LevelName}"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <TextBlock x:Name="Description" Style="{StaticResource LevelDescription}" Text="TextBlock" 
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <!--
+        TextWrapping="Wrap"
+        -->
+            <TextBlock x:Name="Description" 
+              Style="{StaticResource LevelDescription}" 
+                   Text="TextBlock" 
                    TextWrapping="Wrap"
-                   Grid.Row="1" HorizontalAlignment="Stretch"/>
-        <Button Content="Sideload" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Stretch">
+                   Grid.Row="1" 
+                   HorizontalAlignment="Stretch"/>
+        
+        <!--Button Content="Sideload" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Stretch">
             <Button.Flyout>
                 <Flyout>
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -48,14 +75,16 @@
                             <ColumnDefinition Width="20*"/>
                             <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="SideloadUrl" PlaceholderText="http://example.com/..." 
+
+                        < ! - - Future versions (maybe) - - >
+                            < ! - - TextBox x:Name="SideloadUrl" PlaceholderText="http://example.com/..." 
                                  Header="Level Archive URL" Grid.Column="0" Width="300"
                                  InputScope="Url" />
                         <Button Content="Load" Grid.Column="1" VerticalAlignment="Bottom" 
-                                Click="Sideload" />
+                                Click="Sideload" / - - >
                     </Grid>
                 </Flyout>
             </Button.Flyout>
-        </Button>
+        </Button-->
     </Grid>
 </Page>

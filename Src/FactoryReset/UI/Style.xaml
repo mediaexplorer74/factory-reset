@@ -7,6 +7,7 @@
     <Style TargetType="Page">
         <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}"/>
     </Style>
+    
     <Style x:Key="MainMenu" TargetType="Page">
         <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}"/>
         <Setter Property="Background">
@@ -19,22 +20,28 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="MenuPage" TargetType="Page">
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="Background" Value="#80FFFFFF"/>
     </Style>
+    
     <Style TargetType="ListViewItem">
         <Setter Property="FocusVisualPrimaryThickness" Value="0"/>
         <Setter Property="FocusVisualSecondaryThickness" Value="0"/>
+        <Setter Property="FontSize" Value="10"/>
     </Style>
+    
     <Style x:Key="SidePanel" TargetType="ListView">
         <Setter Property="Background" Value="#A0FFFFFF"/>
     </Style>
+    
     <Style x:Key="PanelItem" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}" />
         <Setter Property="FocusVisualPrimaryThickness" Value="0"/>
         <Setter Property="FocusVisualSecondaryThickness" Value="0"/>
     </Style>
+    
     <Style x:Key="MenuHeader" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}" />
         <Setter Property="FontSize" Value="48"/>
@@ -42,24 +49,42 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Margin" Value="0,10,30,0"/>
     </Style>
-    <Style x:Key="Level" TargetType="StackPanel">
+    
+    <!--Style x:Key="Level" TargetType="StackPanel">
         <Setter Property="Margin" Value="10,10,10,10"/>
+    </Style-->
+    <Style x:Key="Level" TargetType="StackPanel">
+    <Setter Property="Margin" Value="10,10,10,10"/>
     </Style>
-    <Style x:Key="LevelPreview" TargetType="Image">
+    
+    <!--
         <Setter Property="Width" Value="200"/>
-        <Setter Property="Height" Value="200"/>
-        <Setter Property="Margin" Value="0,0,0,10"/>
+    <Setter Property="Height" Value="200"/>
+    <Setter Property="Margin" Value="0,0,0,10"/>
+    -->
+    
+        <Style x:Key="LevelPreview" TargetType="Image">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Margin" Value="0,0,0,3"/>
     </Style>
-    <Style x:Key="LevelName" TargetType="TextBlock">
+
+    <!-- 
+      <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}" />
+      <Setter Property="FontSize" Value="24"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+    -->
+        <Style x:Key="LevelName" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}" />
-        <Setter Property="FontSize" Value="24"/>
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="TextAlignment" Value="Center"/>
     </Style>
+    
     <Style x:Key="LevelDescription" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Wellbutrin}"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="TextAlignment" Value="Left"/>
     </Style>
     <Style x:Key="GameOverlay" TargetType="StackPanel">
         <Setter Property="Background" Value="#A0FFFFFF"/>

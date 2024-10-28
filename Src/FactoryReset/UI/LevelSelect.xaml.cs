@@ -12,7 +12,8 @@ namespace GameManager.UI
 {
     public sealed partial class LevelSelect : Page
     {
-        Dictionary<string, LevelPreview> LevelNames = new Dictionary<string, LevelPreview>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, LevelPreview> LevelNames 
+            = new Dictionary<string, LevelPreview>(StringComparer.OrdinalIgnoreCase);
 
         ObservableCollection<LevelPreview> Previews = new ObservableCollection<LevelPreview>();
 
@@ -39,7 +40,9 @@ namespace GameManager.UI
 
         private async void LoadLevels()
         {
-            StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder appInstalledFolder 
+                = Windows.ApplicationModel.Package.Current.InstalledLocation;
+
             StorageFolder content = await appInstalledFolder.GetFolderAsync("Content");
             StorageFolder levels = await content.GetFolderAsync("Levels");
 
@@ -97,12 +100,19 @@ namespace GameManager.UI
             LevelList.SelectedIndex = 0;
         }
 
+        // Future versions (maybe)
+        /*
         private void Sideload(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             string url = SideloadUrl.Text;
             Root.Current.ShowGame();
-            Root.Current.Game.QueueAction((game)=>game.LoadLevel(new Uri(url)));
+
+            Root.Current.Game.QueueAction((game) =>
+            {
+                game.LoadLevel(new Uri(url));
+            });
         }
+        */
     }
 
     public class LevelPreview
@@ -130,8 +140,12 @@ namespace GameManager.UI
         // Thanks for the cool shit, Microsoft.
         private async void LoadPreview(Stream preview)
         {
-            var decoder = await BitmapDecoder.CreateAsync(preview.AsRandomAccessStream());
-            var bitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+            BitmapDecoder decoder = 
+                await BitmapDecoder.CreateAsync(preview.AsRandomAccessStream());
+
+            SoftwareBitmap bitmap = await decoder.GetSoftwareBitmapAsync(
+                BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+
             await Preview.SetBitmapAsync(bitmap);
         }
     }

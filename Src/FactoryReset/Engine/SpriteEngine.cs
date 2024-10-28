@@ -72,10 +72,10 @@ namespace GameManager
                 TileEffect.Parameters["offset"].SetValue(source);
                 TileEffect.Parameters["tileset"].SetValue(texture);
             }
-            else
-            {
-                Debug.WriteLine("[warn] TileEffect is *null*!");
-            }
+            //else
+            //{
+            //    Debug.WriteLine("[warn] TileEffect is *null*!");
+            //}
 
 
             device.SetVertexBuffer(VertexBuffer);

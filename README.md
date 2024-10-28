@@ -1,19 +1,22 @@
 # FactoryReset v1.0.0
-![](Images/logo.png)
+![FactoryResetLogo](Images/logo.png)
 
 
 ## About
 My "W10M replica" (uwp) of open-sourced FactoryReset game project based on monogame framework.
 
 ## Screenshot(s)
-![](Images/shot01.png)
-![](Images/shot02.png)
+![Win11Tiny](Images/shot01.png)
+![Win11Tiny](Images/shot02.png)
+![W10M](Images/shot03.png)
+![v](Images/shot04.png)
 
 
 ## Status
 - Original game micro-research ended
-- Init State/Game consistance not tested yet
+- Init State (Game consistance not tested at all)
 - UWP + 10240 Windows SDK & Monogame 3.8 support added 
+- TouchPanel control not realized yet
 
 
 ## Game scenario
