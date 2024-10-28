@@ -5,8 +5,16 @@
 ## About
 My "W10M replica" (uwp) of open-sourced FactoryReset game project based on monogame framework.
 
+## Screenshot(s)
+![](Images/shot01.png)
+![](Images/shot02.png)
+
+
 ## Status
-- Init State/Not ready (Shaders obsolete/damaged)
+- Original game micro-research ended
+- Init State/Game consistance not tested yet
+- UWP + 10240 Windows SDK & Monogame 3.8 support added 
+
 
 ## Game scenario
 A 2D stealth action platformer with hand-crafted pixel-art animation. Made for the 2019 Games Programming Laboratory at ETH. A original game trailer can be seen on [YouTube](https://www.youtube.com/watch?v=L0zmt9HId54).
