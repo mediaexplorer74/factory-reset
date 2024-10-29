@@ -22,7 +22,11 @@ My "W10M replica" (uwp) of open-sourced FactoryReset game project based on monog
 
 
 ## Game scenario
-A 2D stealth action platformer with hand-crafted pixel-art animation. Made for the 2019 Games Programming Laboratory at ETH. A original game trailer can be seen on [YouTube](https://www.youtube.com/watch?v=L0zmt9HId54).
+The main goal is reset some Sweddish factory :)
+
+## Design / Tech. details
+A 2D stealth action platformer with hand-crafted pixel-art animation. 
+Made for the 2019 Games Programming Laboratory at ETH. A original game trailer can be seen on [YouTube](https://www.youtube.com/watch?v=L0zmt9HId54).
 
 ## Controlling via TouchPanel
 - Swipe left/right/up/down: move left/right/up/down
@@ -31,6 +35,7 @@ A 2D stealth action platformer with hand-crafted pixel-art animation. Made for t
 - Double swipe left: back (?)
 - Double swipe right: open the door
 - Double swipe up: call mom ;)
+- Three-finger multi-touch: pause / menu
 
 ## References
 - https://shinmera.itch.io/factory-reset Original Factory Reset game (uwp for x64 Windows PC x64)
