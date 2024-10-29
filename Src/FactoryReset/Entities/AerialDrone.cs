@@ -294,6 +294,11 @@ namespace GameManager
 
         #region Constructors
 
+        //RnD
+        static AerialDrone()
+        {
+        }
+
         public AerialDrone(Vector2 position, Game1 game) : base(game, new Vector2(Chunk.TileSize/3, Chunk.TileSize/6))
         {
             Spawn = position;
@@ -738,7 +743,13 @@ namespace GameManager
                     && chunk.Level.Player.DeathTimer <= 0
                     && GetBoundingBox().Intersects(chunk.Level.Player.GetBoundingBox()))
                 {
-                    chunk.Level.Player.Kill();
+                    //DEBUG
+                    //chunk.Level.Player.Kill();
+                    Game.TextEngine.QueueText("AERIAL DRONE: kill", /*Camera.GetTargetSize()*/
+                        new Vector2(200,200)
+                    + Vector2.UnitY * 100, 40, Color.DarkBlue,
+                    TextEngine.Orientation.Center, TextEngine.Orientation.Center);
+                    Game.TextEngine.DrawText();
                 }
             }
             

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameManager
 {
-    class Level:Window
+    class Level : Window
     {
         public string Name;
 
@@ -268,12 +268,14 @@ namespace GameManager
                         return;
                     }
 
-                    if (PlayerBB.Right + Game1.DeltaT * Player.Velocity.X > ActiveChunk.BoundingBox.Right && Player.Velocity.X > 0)
+                    if (PlayerBB.Right + Game1.DeltaT 
+                        * Player.Velocity.X > ActiveChunk.BoundingBox.Right && Player.Velocity.X > 0)
                     {
                         TransitionDirection = Chunk.Right;
                         ChunkTrans = true;
                     }
-                    else if (PlayerBB.Left + Game1.DeltaT * Player.Velocity.X < ActiveChunk.BoundingBox.Left && Player.Velocity.X < 0)
+                    else if (PlayerBB.Left + Game1.DeltaT * Player.Velocity.X 
+                        < ActiveChunk.BoundingBox.Left && Player.Velocity.X < 0)
                     {
                         TransitionDirection = Chunk.Left;
                         ChunkTrans = true;
@@ -309,15 +311,21 @@ namespace GameManager
                         if (TargetChunk == null)
                         {
                             TargetChunk = LastActiveChunk;
-                            if (TransitionDirection == Chunk.Left || TransitionDirection == Chunk.Right || TransitionDirection == Chunk.Up)
+                            if (TransitionDirection == Chunk.Left
+                                || TransitionDirection == Chunk.Right
+                                || TransitionDirection == Chunk.Up)
                             {
                                 ChunkTrans = false;
                             }
                         }
                         if (ChunkTrans)
                         {
-                            if ((TransitionDirection == Chunk.Left || TransitionDirection == Chunk.Right) &&
-                                TargetChunk.CollideSolid(Player, Game1.DeltaT, out int direction, out float time, out RectangleF[] targetBB, out Vector2[] targetvel))
+                            if ((TransitionDirection == Chunk.Left 
+                                || TransitionDirection == Chunk.Right)
+                                &&
+                                TargetChunk.CollideSolid(Player, Game1.DeltaT, 
+                                out int direction, out float time, 
+                                out RectangleF[] targetBB, out Vector2[] targetvel))
                             {
                                 ChunkTrans = false;
                             }
@@ -353,7 +361,8 @@ namespace GameManager
                                                 break;
                                         }
 
-                                        Alarm.ContinueAlert(Player.Position + Chunk.TileSize * 2F * posOffset, TargetChunk);
+                                        Alarm.ContinueAlert(Player.Position
+                                            + Chunk.TileSize * 2F * posOffset, TargetChunk);
                                     }
                                     else
                                     {
@@ -461,11 +470,14 @@ namespace GameManager
             foreach (Container container in Popups)
                 container.Draw();
 
-            if(Player.DeathTimer > 0 || DeathFadeLingerTimer > 0 || FallFadeTimer > 0 || LoadFadeTimer > 0)
+            if(Player.DeathTimer > 0 || DeathFadeLingerTimer > 0
+                || FallFadeTimer > 0 || LoadFadeTimer > 0)
             {
                 float alpha = Player.DeathTimer > 0 ? 1 - Player.DeathTimer / Player.DeathDuration : 
                     (FallFadeTimer > 0 ? 1 - FallFadeTimer / FallFadeDuration : 
-                    Math.Max(LoadFadeTimer/LoadFadeDuration,DeathFadeLingerTimer / DeathFadeLingerDuration));
+                    Math.Max(LoadFadeTimer/LoadFadeDuration,
+                    DeathFadeLingerTimer / DeathFadeLingerDuration));
+
                 Vector2 LL = -1.2F*Camera.GetTargetSize();
                 Vector2 UL = 1.2F*Camera.GetTargetSize() * new Vector2(-1,1);
                 Vector2 LR = 1.2F*Camera.GetTargetSize() * new Vector2(1, -1);
@@ -478,17 +490,24 @@ namespace GameManager
                 OverlayTriangles[4] = LR;
                 OverlayTriangles[5] = UR;
 
-                Game.TriangleEngine.DrawTriangles(Camera.Position, OverlayTriangles, new Color(0,0,0,alpha));
+                Game.TriangleEngine.DrawTriangles(Camera.Position, 
+                    OverlayTriangles, new Color(0,0,0,alpha));
 
                 if(Player.DeathTimer > 0 || FallFadeTimer > 0)
                 {
-                    //Game.TextEngine.QueueText("Try not dying", Camera.GetTargetSize() + Vector2.UnitY * 100, 40, Color.DarkRed, TextEngine.Orientation.Center, TextEngine.Orientation.Center);
-                    //Game.TextEngine.DrawText();
+                    //DEBUG
+                    Game.TextEngine.QueueText("Try not dying", Camera.GetTargetSize() 
+                    + Vector2.UnitY * 100, 40, Color.DarkBlue, 
+                    TextEngine.Orientation.Center, TextEngine.Orientation.Center);
+                    Game.TextEngine.DrawText();
                 }
                 else if(DeathFadeLingerTimer > 0)
                 {
-                    //Game.TextEngine.QueueText("YOU DIED", Camera.GetTargetSize() + Vector2.UnitY * 100, 40, new Color(alpha * 139 / 255F, 0, 0, alpha), TextEngine.Orientation.Center, TextEngine.Orientation.Center);
-                    //Game.TextEngine.DrawText();
+                    //DEBUG
+                    Game.TextEngine.QueueText("YOU DIED", Camera.GetTargetSize() 
+                    +Vector2.UnitY * 100, 40, Color.DarkGreen,//new Color(alpha * 139 / 255F, 0, 0, alpha),
+                    TextEngine.Orientation.Center, TextEngine.Orientation.Center);
+                    Game.TextEngine.DrawText();
                 }
             }
         }
