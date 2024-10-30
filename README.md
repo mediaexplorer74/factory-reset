@@ -15,7 +15,7 @@ My "W10M replica" (uwp) of open-sourced FactoryReset game project based on monog
 
 ## Progress / Status
 - I researched that Asperate-like leveleditor used.
-- Aslo, customized level editor used (see Src/editor folder, use index.html and Google Chrome browser for level editing) and "Level complete" bug for Demo level.
+- Aslo, customized level editor used (see Src/editor folder, use index.html and Google Chrome browser for level editing), and "Level complete" bug fixed for Demo level.
 - Added realtime "game content building" (monogame rendrering tasks) from .png to xnb, etc. :)
 
 
