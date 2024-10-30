@@ -209,8 +209,7 @@ namespace GameManager
             if (!DrawSolids)
             {
                 if (Background != null)
-                    Game.ParallaxEngine.Draw(Background, Level.Camera.Position, 
-                        Level.Camera.ViewScale);
+                    Game.ParallaxEngine.Draw(Background, Level.Camera.Position, Level.Camera.ViewScale);
 
             }
         }
@@ -219,16 +218,14 @@ namespace GameManager
         {
             if (DrawSolids)
             {
-                Game.TilemapEngine.Draw(Layers[0], Solidset, 
-                    new Vector2(BoundingBox.X, BoundingBox.Y));
+                Game.TilemapEngine.Draw(Layers[0], Solidset, new Vector2(BoundingBox.X, BoundingBox.Y));
                 CallAll(x => x.Draw());
             }
             else
             {
                 int mid = ((Layers.Length-1)/2)+1;
                 for(int i=1; i<mid; ++i)
-                    Game.TilemapEngine.Draw(Layers[i], Tileset, 
-                        new Vector2(BoundingBox.X, BoundingBox.Y));
+                    Game.TilemapEngine.Draw(Layers[i], Tileset, new Vector2(BoundingBox.X, BoundingBox.Y));
                 CallAll(x => x.DrawBackground());
 
             }
@@ -241,8 +238,7 @@ namespace GameManager
                 int mid = ((Layers.Length - 1) / 2) + 1;
                 CallAll(x => x.Draw());
                 for (int i = mid; i < Layers.Length; ++i)
-                    Game.TilemapEngine.Draw(Layers[i], Tileset, 
-                        new Vector2(BoundingBox.X, BoundingBox.Y));
+                    Game.TilemapEngine.Draw(Layers[i], Tileset, new Vector2(BoundingBox.X, BoundingBox.Y));
             }
         }
 
@@ -277,22 +273,19 @@ namespace GameManager
 
                     if (Enum.IsDefined(typeof(Colors), tile))
                     {
-                        Vector2 position = new Vector2
-                            (x * TileSize + BoundingBox.X + TileSize / 2,
-                            y * TileSize + BoundingBox.Y + TileSize / 2);
+                        Vector2 position = new Vector2(x * TileSize + BoundingBox.X + TileSize / 2,
+                                                       y * TileSize + BoundingBox.Y + TileSize / 2);
 
                         switch (tile)
                         {
                             case (uint)Colors.PlayerStart:
-                                SpawnPosition = new Vector2
-                              (x * TileSize + BoundingBox.X + TileSize / 2,
-                               y * TileSize + BoundingBox.Y + TileSize);
+                                SpawnPosition = new Vector2(x * TileSize + BoundingBox.X + TileSize / 2,
+                                                            y * TileSize + BoundingBox.Y + TileSize);
                                 break;
                             case (uint)Colors.StaticCamera:
                                 {
                                     bool left = (GetTile(x - 1, y) == (uint)Colors.SolidPlatform);
-                                    NonCollidingEntities.Add(
-                                        new StaticCamera(position, (left) ? 315 : 225, Game));
+                                    NonCollidingEntities.Add(new StaticCamera(position, (left) ? 315 : 225, Game));
                                     break;
                                 }
                             case (uint)Colors.PivotCamera:
@@ -320,10 +313,8 @@ namespace GameManager
                                     CollidingEntities.Add(door);
                                     OccludingEntities.Add(door.GetOcclusionEntity);
                                     SolidEntities.Add(door.GetSolidEntity);
-                                    SolidTiles[(Height - y - 1) 
-                                        * Width + x] = (uint)Colors.AerialDroneWall;
-                                    SolidTiles[(Height - (y+1) - 1)
-                                        * Width + x] = (uint)Colors.AerialDroneWall;
+                                    SolidTiles[(Height - y - 1) * Width + x] = (uint)Colors.AerialDroneWall;
+                                    SolidTiles[(Height - (y+1) - 1) * Width + x] = (uint)Colors.AerialDroneWall;
                                 }
                                 break;
                             case (uint)Colors.DialogTrigger:
@@ -362,19 +353,15 @@ namespace GameManager
 
             int minX = (int)Math.Max(Math.Floor((sourceBB.Left - BoundingBox.X) / TileSize), 0);
             int minY = (int)Math.Max(Math.Floor((sourceBB.Bottom - BoundingBox.Y) / TileSize), 0);
-            int maxX = (int)Math.Min(Math.Floor((sourceBB.Right 
-                - BoundingBox.X) / TileSize) + 1, Width);
-            int maxY = (int)Math.Min(Math.Floor((sourceBB.Top 
-                - BoundingBox.Y) / TileSize) + 1, Height);
+            int maxX = (int)Math.Min(Math.Floor((sourceBB.Right - BoundingBox.X) / TileSize) + 1, Width);
+            int maxY = (int)Math.Min(Math.Floor((sourceBB.Top - BoundingBox.Y) / TileSize) + 1, Height);
 
             for (int x = minX; x < maxX; ++x)
             {
                 for (int y = minY; y < maxY; ++y)
                 {
                     if (TileObjects.ContainsKey(GetTile(x, y)))
-                        action(TileObjects[GetTile(x, y)], 
-                            new Vector2(BoundingBox.X + (x+0.5F) * TileSize, 
-                            BoundingBox.Y + (y + 0.5F) * TileSize));
+                        action(TileObjects[GetTile(x, y)], new Vector2(BoundingBox.X + (x+0.5F) * TileSize, BoundingBox.Y + (y + 0.5F) * TileSize));
                 }
             }
         }
@@ -382,8 +369,7 @@ namespace GameManager
         public void ForEachCollidingEntity(BoxEntity source, Action<Entity> action)
         {
             foreach(Entity e in CollidingEntities){
-                if(source.Contains(e.Position) 
-                    || (e is BoxEntity && source.Contains((BoxEntity)e)))
+                if(source.Contains(e.Position) || (e is BoxEntity && source.Contains((BoxEntity)e)))
                     action(e);
             }
         }
@@ -423,9 +409,7 @@ namespace GameManager
         }
 
         //Dictionary is point to cw/ccw line
-        public SortedDictionary<float, Tuple<Vector2, Vector2>> BuildLOSHelper(
-            RectangleF boundingBox, Vector2 pos, float radius, 
-            Vector2 dir1, Vector2 dir2, bool backgroundwalls = true)
+        public SortedDictionary<float, Tuple<Vector2, Vector2>> BuildLOSHelper(RectangleF boundingBox, Vector2 pos, float radius, Vector2 dir1, Vector2 dir2, bool backgroundwalls = true)
         {
             float radiusSqr = radius * radius;
             float Cross2(Vector2 x1, Vector2 x2) => x1.X * x2.Y - x1.Y * x2.X;
@@ -438,8 +422,7 @@ namespace GameManager
 
             float getAngle(Vector2 p)
             {
-                return ConeEntity.ConvertAngle(
-                    (float)Math.Atan2(p.Y - pos.Y, p.X - pos.X) - startingangle);
+                return ConeEntity.ConvertAngle((float)Math.Atan2(p.Y - pos.Y, p.X - pos.X) - startingangle);
             }
 
             bool inRange(Vector2 p)
@@ -458,10 +441,8 @@ namespace GameManager
 
             int minX = (int)Math.Max(Math.Floor((boundingBox.Left - BoundingBox.X) / TileSize), 0);
             int minY = (int)Math.Max(Math.Floor((boundingBox.Bottom - BoundingBox.Y) / TileSize), 0);
-            int maxX = (int)Math.Min(Math.Floor((boundingBox.Right - BoundingBox.X) 
-                / TileSize) + 1, Width);
-            int maxY = (int)Math.Min(Math.Floor((boundingBox.Top - BoundingBox.Y) 
-                / TileSize) + 1, Height);
+            int maxX = (int)Math.Min(Math.Floor((boundingBox.Right - BoundingBox.X) / TileSize) + 1, Width);
+            int maxY = (int)Math.Min(Math.Floor((boundingBox.Top - BoundingBox.Y) / TileSize) + 1, Height);
 
             var offset = new Vector2(BoundingBox.X, BoundingBox.Y);
 
@@ -469,8 +450,7 @@ namespace GameManager
             {
                 for (int y = minY; y < maxY; ++y)
                 {
-                    if (GetTile(x, y) == (uint)Colors.SolidPlatform 
-                        || (backgroundwalls && GetTile(x, y) == (uint)Colors.BackgroundWall))
+                    if (GetTile(x, y) == (uint)Colors.SolidPlatform || (backgroundwalls && GetTile(x, y) == (uint)Colors.BackgroundWall))
                     {
                         Vector2 tilePosition = offset + new Vector2(x + 0.5F, y + 0.5F) * TileSize;
                         var dir = pos - tilePosition;
@@ -480,32 +460,26 @@ namespace GameManager
 
                         if (Math.Sign(dir.X) == Math.Sign(dircorner.X)
                             && !(GetTile((int)cornerOffset.X + x, y) == (uint)Colors.SolidPlatform
-                            || (backgroundwalls && GetTile((int)cornerOffset.X + x, y) 
-                                  == (uint)Colors.BackgroundWall)))
+                            || (backgroundwalls && GetTile((int)cornerOffset.X + x, y) == (uint)Colors.BackgroundWall)))
                         {
                             Vector2 point1;
                             Vector2 point2;
                             if (cornerOffset.X == cornerOffset.Y)
                             {
                                 point1 = tilePosition + cornerOffset * TileSize / 2;
-                                point2 = tilePosition + new Vector2(
-                                    cornerOffset.X, -cornerOffset.Y) * TileSize / 2;
+                                point2 = tilePosition + new Vector2(cornerOffset.X, -cornerOffset.Y) * TileSize / 2;
                             }
                             else
                             {
                                 point2 = tilePosition + cornerOffset * TileSize / 2;
-                                point1 = tilePosition + new Vector2(
-                                    cornerOffset.X, -cornerOffset.Y) * TileSize / 2;
+                                point1 = tilePosition + new Vector2(cornerOffset.X, -cornerOffset.Y) * TileSize / 2;
                             }
 
-                            float angle1 = ConeEntity.ConvertAngle(
-                                (float)Math.Atan2(point1.Y - pos.Y, point1.X - pos.X) - startingangle);
+                            float angle1 = ConeEntity.ConvertAngle((float)Math.Atan2(point1.Y - pos.Y, point1.X - pos.X) - startingangle);
 
-                            float angle2 = ConeEntity.ConvertAngle(
-                                (float)Math.Atan2(point2.Y - pos.Y, point2.X - pos.X) - startingangle);
+                            float angle2 = ConeEntity.ConvertAngle((float)Math.Atan2(point2.Y - pos.Y, point2.X - pos.X) - startingangle);
 
-                            if ((inAngle(point1) || inAngle(point2)) 
-                                && (inRange(point1) || inRange(point2)))
+                            if ((inAngle(point1) || inAngle(point2)) && (inRange(point1) || inRange(point2)))
                             {
                                 if (!inAngle(point1))
                                 {
@@ -513,33 +487,26 @@ namespace GameManager
                                 }
                                 if (!inRange(point1) || !inRange(point2))
                                 {
-                                    if (ConeEntity.IntersectCircle(point1, point2, 
-                                        radius, pos, 1, out float t))
+                                    if (ConeEntity.IntersectCircle(point1, point2, radius, pos, 1, out float t))
                                     {
                                         Vector2 newPoint = point1 + (point2 - point1) * t;
 
                                         if (!inRange(point1))
                                         {
                                             point1 = newPoint;
-                                            angle1 = ConeEntity.ConvertAngle(
-                                                (float)Math.Atan2(newPoint.Y - pos.Y, 
-                                                newPoint.X - pos.X) - startingangle);
+                                            angle1 = ConeEntity.ConvertAngle((float)Math.Atan2(newPoint.Y - pos.Y, newPoint.X - pos.X) - startingangle);
                                         }
                                         else
                                         {
                                             point2 = newPoint;
-                                            angle2 = ConeEntity.ConvertAngle(
-                                                (float)Math.Atan2(newPoint.Y - pos.Y, 
-                                                newPoint.X - pos.X) - startingangle);
+                                            angle2 = ConeEntity.ConvertAngle((float)Math.Atan2(newPoint.Y - pos.Y, newPoint.X - pos.X) - startingangle);
                                         }
                                     }
                                 }
 
-                                if (points.TryGetValue(angle1, out var point1Entry) 
-                                    && point1Entry.Item1 != point1)
+                                if (points.TryGetValue(angle1, out var point1Entry) && point1Entry.Item1 != point1)
                                 {
-                                    if ((point1 - pos).LengthSquared() 
-                                        < (point1Entry.Item2 - pos).LengthSquared())
+                                    if ((point1 - pos).LengthSquared() < (point1Entry.Item2 - pos).LengthSquared())
                                     {
                                         points[angle1] = new Tuple<Vector2, Vector2>(point1, point2);
                                     }
@@ -551,50 +518,40 @@ namespace GameManager
 
                                 if (points.TryGetValue(angle2, out var point2Entry))
                                 {
-                                    if (point2Entry.Item1 != point2 && 
-                                        (point2 - pos).LengthSquared() 
-                                        < (point2Entry.Item2 - pos).LengthSquared())
+                                    if (point2Entry.Item1 != point2 && (point2 - pos).LengthSquared() < (point2Entry.Item2 - pos).LengthSquared())
                                     {
-                                        points[angle2] = new Tuple<Vector2, 
-                                            Vector2>(point2, new Vector2(float.NaN)); ;
+                                        points[angle2] = new Tuple<Vector2, Vector2>(point2, new Vector2(float.NaN)); ;
                                     }
                                 }
                                 else
                                 {
-                                    points[angle2] = new Tuple<Vector2, Vector2>(point2, 
-                                        new Vector2(float.NaN));
+                                    points[angle2] = new Tuple<Vector2, Vector2>(point2, new Vector2(float.NaN));
                                 }
                             }
                         }
 
                         if (Math.Sign(dir.Y) == Math.Sign(dircorner.Y)
                             && !(GetTile(x, (int)cornerOffset.Y + y) == (uint)Colors.SolidPlatform
-                            || (backgroundwalls && GetTile(x, (int)cornerOffset.Y + y) 
-                            == (uint)Colors.BackgroundWall)))
+                            || (backgroundwalls && GetTile(x, (int)cornerOffset.Y + y) == (uint)Colors.BackgroundWall)))
                         {
                             Vector2 point1;
                             Vector2 point2;
                             if (cornerOffset.X == cornerOffset.Y)
                             {
                                 point2 = tilePosition + cornerOffset * TileSize / 2;
-                                point1 = tilePosition + 
-                                    new Vector2(-cornerOffset.X, cornerOffset.Y) * TileSize / 2;
+                                point1 = tilePosition + new Vector2(-cornerOffset.X, cornerOffset.Y) * TileSize / 2;
                             }
                             else
                             {
                                 point1 = tilePosition + cornerOffset * TileSize / 2;
-                                point2 = tilePosition + 
-                                    new Vector2(-cornerOffset.X, cornerOffset.Y) * TileSize / 2;
+                                point2 = tilePosition + new Vector2(-cornerOffset.X, cornerOffset.Y) * TileSize / 2;
                             }
 
-                            float angle1 = ConeEntity.ConvertAngle((float)Math.Atan2(
-                                point1.Y - pos.Y, point1.X - pos.X) - startingangle);
+                            float angle1 = ConeEntity.ConvertAngle((float)Math.Atan2(point1.Y - pos.Y, point1.X - pos.X) - startingangle);
 
-                            float angle2 = ConeEntity.ConvertAngle((float)Math.Atan2(
-                                point2.Y - pos.Y, point2.X - pos.X) - startingangle);
+                            float angle2 = ConeEntity.ConvertAngle((float)Math.Atan2(point2.Y - pos.Y, point2.X - pos.X) - startingangle);
 
-                            if ((inAngle(point1) || inAngle(point2)) 
-                                && (inRange(point1) || inRange(point2)))
+                            if ((inAngle(point1) || inAngle(point2)) && (inRange(point1) || inRange(point2)))
                             {
                                 if (!inAngle(point1))
                                 {
@@ -602,31 +559,26 @@ namespace GameManager
                                 }
                                 if (!inRange(point1) || !inRange(point2))
                                 {
-                                    if (ConeEntity.IntersectCircle(point1, point2, radius, 
-                                        pos, 1, out float t))
+                                    if (ConeEntity.IntersectCircle(point1, point2, radius, pos, 1, out float t))
                                     {
                                         Vector2 newPoint = point1 + (point2 - point1) * t;
 
                                         if (!inRange(point1))
                                         {
                                             point1 = newPoint;
-                                            angle1 = ConeEntity.ConvertAngle(
-                                                (float)Math.Atan2(newPoint.Y - pos.Y, newPoint.X - pos.X) - startingangle);
+                                            angle1 = ConeEntity.ConvertAngle((float)Math.Atan2(newPoint.Y - pos.Y, newPoint.X - pos.X) - startingangle);
                                         }
                                         else
                                         {
                                             point2 = newPoint;
-                                            angle2 = ConeEntity.ConvertAngle(
-                                                (float)Math.Atan2(newPoint.Y - pos.Y, newPoint.X - pos.X) - startingangle);
+                                            angle2 = ConeEntity.ConvertAngle((float)Math.Atan2(newPoint.Y - pos.Y, newPoint.X - pos.X) - startingangle);
                                         }
                                     }
                                 }
 
-                                if (points.TryGetValue(angle1, out var point1Entry) 
-                                    && point1Entry.Item1 != point1)
+                                if (points.TryGetValue(angle1, out var point1Entry) && point1Entry.Item1 != point1)
                                 {
-                                    if ((point1 - pos).LengthSquared() 
-                                        < (point1Entry.Item2 - pos).LengthSquared())
+                                    if ((point1 - pos).LengthSquared() < (point1Entry.Item2 - pos).LengthSquared())
                                     {
                                         points[angle1] = new Tuple<Vector2, Vector2>(point1, point2);
                                     }
@@ -638,8 +590,7 @@ namespace GameManager
 
                                 if (points.TryGetValue(angle2, out var point2Entry))
                                 {
-                                    if (point2Entry.Item1 != point2 
-                                        && (point2 - pos).LengthSquared() < (point2Entry.Item2 - pos).LengthSquared())
+                                    if (point2Entry.Item1 != point2 && (point2 - pos).LengthSquared() < (point2Entry.Item2 - pos).LengthSquared())
                                     {
                                         points[angle2] = new Tuple<Vector2, Vector2>(point2, new Vector2(float.NaN)); ;
                                     }

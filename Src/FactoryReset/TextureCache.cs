@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// TextureCatcher
+
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameManager
@@ -6,7 +8,8 @@ namespace GameManager
     public class TextureCache
     {
         private readonly Game1 Game;
-        private readonly Dictionary<string, Texture2D> Cache = new Dictionary<string, Texture2D>();
+        private readonly Dictionary<string, Texture2D> Cache 
+            = new Dictionary<string, Texture2D>();
         
         public TextureCache(Game1 game)
         {
@@ -18,7 +21,8 @@ namespace GameManager
             if(!Cache.ContainsKey(texture))
             {
                 Game1.Log("TextureCache","Loading {0}",texture);
-                Cache.Add(texture, Game.Content.ReadAsset<Texture2D>("Textures/"+texture));
+                Cache.Add(texture, 
+                    Game.Content.ReadAsset<Texture2D>("Textures/"+texture));
                 // Callback to advance load screen
                 Game.AdvanceLoad();
             }

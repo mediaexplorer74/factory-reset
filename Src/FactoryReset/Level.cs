@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameManager
 {
-    class Level : Window
+    class Level:Window
     {
         public string Name;
 
@@ -174,24 +174,30 @@ namespace GameManager
 
         public override void LoadContent(ContentManager content)
         {
+            bool allOk = true;
             using(var data = LevelContent.Read(Identifier))
             {
-                data.Resolve(Game.GraphicsDevice);
-            
-                foreach(var chunkdata in data.chunks)
+                if (data != null)
                 {
-                    Chunk chunk = new Chunk(Game, this, chunkdata);
-                    chunk.LoadContent(content);
-                    Chunks.Add(chunk);
+                    data.Resolve(Game.GraphicsDevice);
+
+                    foreach (var chunkdata in data.chunks)
+                    {
+                        Chunk chunk = new Chunk(Game, this, chunkdata);
+                        chunk.LoadContent(content);
+                        Chunks.Add(chunk);
+                    }
+
+                    StartChase = data.startChase;
+                    ActiveChunk = Chunks[data.startChunk];
+                    Next = data.next;
+
+                    Name = data.name;
+
+                    TriggeredDialogs = data.storyItems;
                 }
-
-                StartChase = data.startChase;
-                ActiveChunk = Chunks[data.startChunk];
-                Next = data.next;
-
-                Name = data.name;
-
-                TriggeredDialogs = data.storyItems;
+                else
+                    allOk = false;
             }
 
             for(int i = 0; i < RandomDialogs.Length - 2; ++i)
@@ -204,9 +210,20 @@ namespace GameManager
             }
             
             Player.LoadContent(content);
-            Player.Position = ActiveChunk.SpawnPosition;
-            ActiveChunk.Activate(Player);
-            LastActiveChunk = ActiveChunk;
+
+            if (allOk == true)
+            {
+                Player.Position = ActiveChunk.SpawnPosition;
+                ActiveChunk.Activate(Player);
+                LastActiveChunk = ActiveChunk;
+            }
+            else
+            {
+                Player.Position = new Vector2(0, 0);
+            }
+
+
+          
             
             //  Force camera to be still
             Camera.Position.X = Player.Position.X;
@@ -268,14 +285,16 @@ namespace GameManager
                         return;
                     }
 
-                    if (PlayerBB.Right + Game1.DeltaT 
-                        * Player.Velocity.X > ActiveChunk.BoundingBox.Right && Player.Velocity.X > 0)
+                    if (ActiveChunk != null)
+                    { 
+                    if (PlayerBB.Right + Game1.DeltaT * Player.Velocity.X 
+                            > ActiveChunk.BoundingBox.Right && Player.Velocity.X > 0)
                     {
                         TransitionDirection = Chunk.Right;
                         ChunkTrans = true;
                     }
                     else if (PlayerBB.Left + Game1.DeltaT * Player.Velocity.X 
-                        < ActiveChunk.BoundingBox.Left && Player.Velocity.X < 0)
+                            < ActiveChunk.BoundingBox.Left && Player.Velocity.X < 0)
                     {
                         TransitionDirection = Chunk.Left;
                         ChunkTrans = true;
@@ -289,6 +308,7 @@ namespace GameManager
                     {
                         TransitionDirection = Chunk.Down;
                         ChunkTrans = true;
+                    }
                     }
 
                     if (ChunkTrans)
@@ -311,7 +331,7 @@ namespace GameManager
                         if (TargetChunk == null)
                         {
                             TargetChunk = LastActiveChunk;
-                            if (TransitionDirection == Chunk.Left
+                            if (TransitionDirection == Chunk.Left 
                                 || TransitionDirection == Chunk.Right
                                 || TransitionDirection == Chunk.Up)
                             {
@@ -321,11 +341,11 @@ namespace GameManager
                         if (ChunkTrans)
                         {
                             if ((TransitionDirection == Chunk.Left 
-                                || TransitionDirection == Chunk.Right)
-                                &&
-                                TargetChunk.CollideSolid(Player, Game1.DeltaT, 
-                                out int direction, out float time, 
-                                out RectangleF[] targetBB, out Vector2[] targetvel))
+                                || TransitionDirection == Chunk.Right) &&
+                                TargetChunk.CollideSolid(Player, 
+                                Game1.DeltaT, out int direction, 
+                                out float time, out RectangleF[] targetBB,
+                                out Vector2[] targetvel))
                             {
                                 ChunkTrans = false;
                             }
@@ -361,8 +381,8 @@ namespace GameManager
                                                 break;
                                         }
 
-                                        Alarm.ContinueAlert(Player.Position
-                                            + Chunk.TileSize * 2F * posOffset, TargetChunk);
+                                        Alarm.ContinueAlert(Player.Position + 
+                                            Chunk.TileSize * 2F * posOffset, TargetChunk);
                                     }
                                     else
                                     {
@@ -470,14 +490,11 @@ namespace GameManager
             foreach (Container container in Popups)
                 container.Draw();
 
-            if(Player.DeathTimer > 0 || DeathFadeLingerTimer > 0
-                || FallFadeTimer > 0 || LoadFadeTimer > 0)
+            if(Player.DeathTimer > 0 || DeathFadeLingerTimer > 0 || FallFadeTimer > 0 || LoadFadeTimer > 0)
             {
                 float alpha = Player.DeathTimer > 0 ? 1 - Player.DeathTimer / Player.DeathDuration : 
                     (FallFadeTimer > 0 ? 1 - FallFadeTimer / FallFadeDuration : 
-                    Math.Max(LoadFadeTimer/LoadFadeDuration,
-                    DeathFadeLingerTimer / DeathFadeLingerDuration));
-
+                    Math.Max(LoadFadeTimer/LoadFadeDuration,DeathFadeLingerTimer / DeathFadeLingerDuration));
                 Vector2 LL = -1.2F*Camera.GetTargetSize();
                 Vector2 UL = 1.2F*Camera.GetTargetSize() * new Vector2(-1,1);
                 Vector2 LR = 1.2F*Camera.GetTargetSize() * new Vector2(1, -1);
@@ -490,24 +507,17 @@ namespace GameManager
                 OverlayTriangles[4] = LR;
                 OverlayTriangles[5] = UR;
 
-                Game.TriangleEngine.DrawTriangles(Camera.Position, 
-                    OverlayTriangles, new Color(0,0,0,alpha));
+                Game.TriangleEngine.DrawTriangles(Camera.Position, OverlayTriangles, new Color(0,0,0,alpha));
 
                 if(Player.DeathTimer > 0 || FallFadeTimer > 0)
                 {
-                    //DEBUG
-                    Game.TextEngine.QueueText("Try not dying", Camera.GetTargetSize() 
-                    + Vector2.UnitY * 100, 40, Color.DarkBlue, 
-                    TextEngine.Orientation.Center, TextEngine.Orientation.Center);
-                    Game.TextEngine.DrawText();
+                    //Game.TextEngine.QueueText("Try not dying", Camera.GetTargetSize() + Vector2.UnitY * 100, 40, Color.DarkRed, TextEngine.Orientation.Center, TextEngine.Orientation.Center);
+                    //Game.TextEngine.DrawText();
                 }
                 else if(DeathFadeLingerTimer > 0)
                 {
-                    //DEBUG
-                    Game.TextEngine.QueueText("YOU DIED", Camera.GetTargetSize() 
-                    +Vector2.UnitY * 100, 40, Color.DarkGreen,//new Color(alpha * 139 / 255F, 0, 0, alpha),
-                    TextEngine.Orientation.Center, TextEngine.Orientation.Center);
-                    Game.TextEngine.DrawText();
+                    //Game.TextEngine.QueueText("YOU DIED", Camera.GetTargetSize() + Vector2.UnitY * 100, 40, new Color(alpha * 139 / 255F, 0, 0, alpha), TextEngine.Orientation.Center, TextEngine.Orientation.Center);
+                    //Game.TextEngine.DrawText();
                 }
             }
         }

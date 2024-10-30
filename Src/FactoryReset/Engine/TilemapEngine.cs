@@ -44,6 +44,8 @@ namespace GameManager
             // Create shader
             try
             {
+                //RnD
+                //TileEffect = content.Load<Effect>("Shaders/GaussianBlur");
                 TileEffect = content.Load<Effect>("Shaders/tile");
             }
             catch (Exception ex)
@@ -134,6 +136,8 @@ namespace GameManager
             
             device.SetVertexBuffer(VertexBuffer);
             device.Indices = IndexBuffer;
+
+            //RnD
             device.BlendState = BlendState.AlphaBlend;
 
             if (TileEffect != null)

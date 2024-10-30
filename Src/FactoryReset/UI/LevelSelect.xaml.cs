@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -40,9 +42,7 @@ namespace GameManager.UI
 
         private async void LoadLevels()
         {
-            StorageFolder appInstalledFolder 
-                = Windows.ApplicationModel.Package.Current.InstalledLocation;
-
+            StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFolder content = await appInstalledFolder.GetFolderAsync("Content");
             StorageFolder levels = await content.GetFolderAsync("Levels");
 
@@ -100,19 +100,35 @@ namespace GameManager.UI
             LevelList.SelectedIndex = 0;
         }
 
-        // Future versions (maybe)
-        /*
         private void Sideload(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             string url = SideloadUrl.Text;
             Root.Current.ShowGame();
 
+            Uri c_url = default;
             Root.Current.Game.QueueAction((game) =>
             {
-                game.LoadLevel(new Uri(url));
+                try
+                {
+                    c_url = new Uri(url);                        
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("[ex] URI parsing error: " + ex.Message);
+                }
+                game.LoadLevel(c_url);
+               
             });
+
+            //RnD
+            //if (c_url == null)
+            //{
+            //    Root.Current.Game.QueueAction((game) =>
+            //    {
+            //        game.UnloadLevel();
+            //    });
+            //}
         }
-        */
     }
 
     public class LevelPreview
@@ -140,11 +156,12 @@ namespace GameManager.UI
         // Thanks for the cool shit, Microsoft.
         private async void LoadPreview(Stream preview)
         {
-            BitmapDecoder decoder = 
-                await BitmapDecoder.CreateAsync(preview.AsRandomAccessStream());
+            BitmapDecoder decoder = await BitmapDecoder.CreateAsync(
+                preview.AsRandomAccessStream());
 
             SoftwareBitmap bitmap = await decoder.GetSoftwareBitmapAsync(
-                BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                BitmapPixelFormat.Bgra8, 
+                BitmapAlphaMode.Premultiplied);
 
             await Preview.SetBitmapAsync(bitmap);
         }

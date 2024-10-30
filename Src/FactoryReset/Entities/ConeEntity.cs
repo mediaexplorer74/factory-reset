@@ -635,13 +635,11 @@ namespace GameManager
             point = point - Position;
             float r2 = point.LengthSquared();
             float phi = ConvertAngle((float)Math.Atan2(point.Y, point.X));
-            return ((phi > LocalAngle1 && phi < LocalAngle2) 
-                || (LocalAngle2 < LocalAngle1 && (phi > LocalAngle1 || phi < LocalAngle2)))
+            return ((phi > LocalAngle1 && phi < LocalAngle2) || (LocalAngle2 < LocalAngle1 && (phi > LocalAngle1 || phi < LocalAngle2)))
                 && r2 <= GetDistConstraint(phi);
         }
 
-        public override bool Collide(Entity entity, float timestep, 
-            out int direction, out float time, out bool corner)
+        public override bool Collide(Entity entity, float timestep, out int direction, out float time, out bool corner)
         {
             corner = false;
             direction = 0;
@@ -693,8 +691,7 @@ namespace GameManager
 
             if (!chunk.Level.Player.IsHiding && chunk.Level.Player.DeathTimer <= 0)
             {
-                if (Collide(chunk.Level.Player, Game1.DeltaT, out int dirction, 
-                    out float time, out bool corner))
+                if (Collide(chunk.Level.Player, Game1.DeltaT, out int dirction, out float time, out bool corner))
                 {
                     chunk.Level.Alarm.Detected = true;
                     chunk.Level.Alarm.Alert(chunk.Level.Player.Position, chunk);

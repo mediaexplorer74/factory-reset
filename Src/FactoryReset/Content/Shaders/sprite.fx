@@ -1,11 +1,6 @@
-﻿#if OPENGL
-    #define SV_POSITION POSITION
-    #define VS_SHADERMODEL vs_3_0
-    #define PS_SHADERMODEL ps_3_0
-#else
-    #define VS_SHADERMODEL vs_4_0
-    #define PS_SHADERMODEL ps_4_0
-#endif
+﻿//#define SV_POSITION POSITION
+#define VS_SHADERMODEL vs_4_0
+#define PS_SHADERMODEL ps_4_0
 
 float4x4 projectionMatrix;
 float4x4 viewMatrix;
@@ -15,13 +10,13 @@ Texture2D tileset;
 
 struct VertexShaderInput
 {
-    float4 Position : POSITION0;
-    float2 UV : TEXCOORD0;
+    float4 Position : POSITION;
+    float2 UV : TEXCOORD;
 };
 
 struct VertexShaderOutput
 {
-    float4 Position : SV_POSITION;
+    float4 Position : POSITION0; //SV_POSITION;
     float2 UV : TEXCOORD0;
 };
 
@@ -37,7 +32,7 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
     return output;
 }
 
-float4 MainPS(VertexShaderOutput input) : COLOR0
+float4 MainPS(VertexShaderOutput input) : COLOR
 {
     return tileset.Load(int3(input.UV.x, input.UV.y, 0));
 }

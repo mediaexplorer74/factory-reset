@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Controller
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +37,7 @@ namespace GameManager
 
         public struct State
         {
-            public readonly bool MoveLeft, MoveRight, MoveUp, MoveDown, 
+            public readonly bool MoveLeft, MoveRight, MoveUp, MoveDown,
                 Jump, Climb, Hide, Crouch, Pause, Call, Interact, Advance, Back;
 
             public State(KeyboardState key, GamePadState pad, TouchCollection tp)
@@ -112,11 +114,11 @@ namespace GameManager
                     || pad.DPad.Down == ButtonState.Pressed
                     || pad.ThumbSticks.Left.Y < -0.25;
 
-                Jump = tp.Count == 1 
+                Jump = tp.Count == 1
                     || key.IsKeyDown(Keys.Space)
                     || pad.Buttons.A == ButtonState.Pressed
                     || pad.Buttons.B == ButtonState.Pressed;
-        
+
                 Climb = key.IsKeyDown(Keys.LeftShift)
                     || pad.Buttons.LeftShoulder == ButtonState.Pressed
                     || pad.Buttons.RightShoulder == ButtonState.Pressed
@@ -127,14 +129,14 @@ namespace GameManager
                     || key.IsKeyDown(Keys.F)
                     || pad.Buttons.X == ButtonState.Pressed
                     || pad.Buttons.Y == ButtonState.Pressed;
-        
+
                 Crouch = key.IsKeyDown(Keys.LeftControl)
                     || pad.Buttons.LeftStick == ButtonState.Pressed;
-        
+
                 Pause = tp.Count == 3
                     || key.IsKeyDown(Keys.Escape)
                     || pad.Buttons.Start == ButtonState.Pressed;
-                
+
                 Call = DoubleTouchMoveUp // optional =)
                     || key.IsKeyDown(Keys.C)
                     // Not sure if this is actually SELECT
@@ -144,8 +146,8 @@ namespace GameManager
                     || key.IsKeyDown(Keys.E)
                     || pad.Buttons.X == ButtonState.Pressed
                     || pad.Buttons.Y == ButtonState.Pressed;
-                
-                Advance = tp.Count == 1 
+
+                Advance = tp.Count == 1
                     || key.IsKeyDown(Keys.Space)
                     || pad.Buttons.A == ButtonState.Pressed
                     || pad.Buttons.B == ButtonState.Pressed;
@@ -156,19 +158,19 @@ namespace GameManager
                     || pad.Buttons.Back == ButtonState.Pressed;
             }
         };
-        
-       
+
+
         private float VibrationTimer = 0;
-        
-        public Controller(int gamepadIndex=0)
+
+        public Controller(int gamepadIndex = 0)
         {
             this.gamepadIndex = gamepadIndex;
         }
 
         public void Vibrate(float left, float right, float duration)
         {
-            GamePad.SetVibration(gamepadIndex, left*VibrationMultiplier, right*VibrationMultiplier);
-            
+            GamePad.SetVibration(gamepadIndex, left * VibrationMultiplier, right * VibrationMultiplier);
+
             VibrationTimer = duration;
         }
 

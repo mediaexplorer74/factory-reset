@@ -11,9 +11,8 @@ namespace GameManager
 {
     class Player : Movable
     {
-        //RnD
-        const bool CanRepeatWallJump = true;//false;
-        const bool CanDoubleJump = true;//false;
+        const bool CanRepeatWallJump = true;
+        const bool CanDoubleJump = true;
 
         public bool FallThrough => Controller.MoveDown;
 
@@ -22,7 +21,7 @@ namespace GameManager
         private float LongJump = 0;
         private int SoundFrame = 0;
 
-        private readonly float Gravity = 300;//800;
+        private readonly float Gravity = 300;
         private readonly float MaxVel = 170;
         private readonly float AccelRate = 800;
         private readonly float DeaccelRate = 100;
@@ -31,7 +30,7 @@ namespace GameManager
         private readonly float JumpSpeed = 150;
         private readonly float LongJumpTime = 15;
         private readonly float HardFallVelocity = -300;
-        private readonly Vector2 WallJumpVelocity = new Vector2(/*200*/350, /*250*/400);
+        private readonly Vector2 WallJumpVelocity = new Vector2(350, 400);
         private readonly float WallSlideFriction = 0.9F;
 
         private Vector2 TargetSpot;
@@ -57,7 +56,7 @@ namespace GameManager
         public bool IsHiding { get { return State == PlayerState.Hiding; } }
         public bool IsCrouched { get; private set; }
         public float DeathTimer = 0;
-        public const float DeathDuration = 3;//2;
+        public const float DeathDuration = 2;
         private bool ItemDialog;
 
         public float InteractTimer = 0;
@@ -96,22 +95,20 @@ namespace GameManager
             Sprite.Add("crash", 86, 94, 0.4, -1, 1);
             Sprite.Add("slide", 94, 103, 0.5, 102);
             
-            Game.SoundEngine.Load("climb", "Player_Climb1", "Player_Climb2", "Player_Climb3");
-
+            Game.SoundEngine.Load("climb", "Player_Climb1", "Player_Climb2", 
+                "Player_Climb3");
             Game.SoundEngine.Load("hide", "Player_Hide_NEW");
             Game.SoundEngine.Load("jump", "Player_Jump");
             Game.SoundEngine.Load("walljump", "Player_JumpWall");
             Game.SoundEngine.Load("land", "Player_Landing");
-
             Game.SoundEngine.Load("run_outside", "Player_OutsideStep1", 
                 "Player_OutsideStep2", "Player_OutsideStep3");
             Game.SoundEngine.Load("run_inside", "Player_LoudStep1", 
                 "Player_LoudStep2", "Player_LoudStep3");
             Game.SoundEngine.Load("crouch_outside", "Player_QuietStep1",
                 "Player_QuietStep2", "Player_QuietStep3");
-            Game.SoundEngine.Load("crouch_inside", "Player_QuietStep1", 
+            Game.SoundEngine.Load("crouch_inside", "Player_QuietStep1",
                 "Player_QuietStep2", "Player_QuietStep3");
-
             Game.SoundEngine.Load("slide", "Player_Sliding");
             Game.SoundEngine.Load("call", "Player_WalkieTalkie");
             Game.SoundEngine.Load("win", "UI_Win");
@@ -136,12 +133,8 @@ namespace GameManager
             if (0 < DeathTimer)
             {
                 DeathTimer -= dt;
-
-                if (DeathTimer <= 0)
-                {
+                if(DeathTimer <= 0)
                     chunk.Die(this);
-                }
-
                 if(Grounded)
                     Velocity.X = 0;
             }
@@ -169,12 +162,8 @@ namespace GameManager
             // Apply gravity
             Velocity.Y -= dt * Gravity;
 
-            chunk.ForEachCollidingTile(this, (tile, pos) => 
-            {
-                if (tile is TileSpike && State != PlayerState.Dying)
-                {
-                    Kill();
-                }
+            chunk.ForEachCollidingTile(this, (tile, pos) => {
+                if (tile is TileSpike && State != PlayerState.Dying) Kill();
                 else if (tile is TileGoal)
                 {
                     Game.SoundEngine.Play("win");
@@ -191,9 +180,7 @@ namespace GameManager
                         {
                             Vector2 buttonPos = Game.TextEngine.TranslateToWindow(
                                 entity.Position + new Vector2(0, 36));
-
                             Game.TextEngine.QueueButton(TextEngine.Button.Y, buttonPos);
-
                             if (Controller.Interact)
                             {
                                 if (chunk.NextItem < chunk.StoryItems.Length)
@@ -208,7 +195,6 @@ namespace GameManager
                         {
                             Vector2 buttonPos = Game.TextEngine.TranslateToWindow(
                                 entity.Position + new Vector2(0, 36));
-
                             Game.TextEngine.QueueButton(TextEngine.Button.Y, buttonPos);
                             if (hide)
                             {
@@ -291,8 +277,8 @@ namespace GameManager
                     }
 
                     if (left != null || right != null 
-                        || (State == PlayerState.Climbing && (leftCorner != null 
-                        || rightCorner != null)))
+                        || (State == PlayerState.Climbing 
+                        && (leftCorner != null || rightCorner != null)))
                     {
                         HasWallJumped = false;
                         State = PlayerState.Normal;
@@ -476,8 +462,7 @@ namespace GameManager
                     Velocity.Y = 0;
                     if(Sprite.Frame == 78)
                     {
-                        ((Door)TargetEntity).Interact(chunk, false, 
-                            TargetEntity.Position.X < Position.X);
+                        ((Door)TargetEntity).Interact(chunk, false, TargetEntity.Position.X < Position.X);
                     }
 
                     if(Sprite.Frame == 0)
@@ -516,8 +501,7 @@ namespace GameManager
                     {
                         if (Velocity.X < 0 && Grounded) Velocity.X = 0;
                         if (Velocity.X < MaxVel)
-                            Velocity.X += Math.Sign(TargetSpot.X - Position.X) 
-                                * 0.5F * AccelRate * dt;
+                            Velocity.X += Math.Sign(TargetSpot.X - Position.X) * 0.5F * AccelRate * dt;
                     }
                     else
                     {
@@ -528,8 +512,7 @@ namespace GameManager
 
                     if (Sprite.Frame == 88)
                     {
-                        ((Door)TargetEntity).Interact(chunk, true,
-                            TargetEntity.Position.X < Position.X);
+                        ((Door)TargetEntity).Interact(chunk, true, TargetEntity.Position.X < Position.X);
                     }
 
                     if (Sprite.Frame == 6)
@@ -652,15 +635,13 @@ namespace GameManager
                             {
                                 Sprite.Play("crouchwalk");
                                 if (Sprite.Frame == 58 || Sprite.Frame == 63)
-                                    MakeSound(chunk, chunk.IsOutside
-                                        ? "crouch_outside" : "crouch_inside" , 5);
+                                    MakeSound(chunk, chunk.IsOutside ? "crouch_outside" : "crouch_inside" , 5);
                             }
                             else
                             {
                                 Sprite.Play("run");
                                 if (Sprite.Frame == 10 || Sprite.Frame == 18)
-                                    MakeSound(chunk, chunk.IsOutside
-                                        ? "run_outside" : "run_inside", 70);
+                                    MakeSound(chunk, chunk.IsOutside ? "run_outside" : "run_inside", 70);
                             }
                         }
                         else
@@ -738,14 +719,11 @@ namespace GameManager
         {
             if (DeathTimer <= 0)
                 DeathTimer = DeathDuration;
-
             if(State != PlayerState.Dying)
             {
                 Game.SoundEngine.Play("die", Position, 1);
                 State = PlayerState.Dying;
-
                 Controller.Vibrate(1f, 1f, 0.5f);
-
                 if (Game.ActiveWindow is Level)
                     ((Level)Game.ActiveWindow).Camera.Shake(10, 0.5F);
             }

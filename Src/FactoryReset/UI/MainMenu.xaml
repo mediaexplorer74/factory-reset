@@ -9,22 +9,24 @@
     Loaded="Loaded"
     Style="{StaticResource MainMenu}">
     <Grid>
-        <!-- OpenPaneLength="200"  -->
-            <SplitView HorizontalAlignment="Stretch" 
-                   IsPaneOpen="True" 
-                   DisplayMode="Inline"
+        <SplitView HorizontalAlignment="Stretch"
+                   IsPaneOpen="True"
+                   DisplayMode="Inline" 
                    OpenPaneLength="120"
                    PaneBackground="Transparent">
             <SplitView.Pane>
                 <!--SingleSelectionFollowsFocus="True"-->
-                    <ListView x:Name="SidePanel" HorizontalAlignment="Stretch"
-                          IsItemClickEnabled="True" SelectionMode="Single" 
-                          ItemClick="ItemClick" SelectionChanged="SelectionChanged"
+                    <ListView x:Name="SidePanel"
+                              HorizontalAlignment="Stretch"
+                          IsItemClickEnabled="True"
+                              SelectionMode="Single" 
+                          ItemClick="ItemClick"
+                              SelectionChanged="SelectionChanged"
                           Style="{StaticResource SidePanel}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:MenuPage">
-                                <TextBlock Text="{x:Bind Name}" 
-                                           Style="{StaticResource PanelItem}"/>
+                               <TextBlock Text="{x:Bind Name}"
+                                     Style="{StaticResource PanelItem}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

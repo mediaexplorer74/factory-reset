@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
@@ -72,7 +73,13 @@ namespace GameManager
             else if (level is Uri)
                 return Read((Uri)level, readMetadata);
             else
-                throw new ArgumentException(String.Format("{0} is not a valid level identifier. Must be a string or Uri.", level));
+            {
+                //throw new ArgumentException(
+                //    String.Format("{0} is not a valid level identifier. Must be a string or Uri.", level));
+                Debug.WriteLine("[i] " + String.Format("{0} is not a valid level identifier. Must be a string or Uri.",
+                    level));
+                return default;
+            }
         }
         
         public static LevelContent Read(String level, bool readMetadata = false)

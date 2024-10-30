@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Game1
+
+using System;
 using System.Collections.Concurrent;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,13 +35,16 @@ namespace GameManager
         private Window RealActiveWindow;
         public Window ActiveWindow 
         { 
-            get{
+            get
+            {
                 return RealActiveWindow;
             }
         
-            private set{
+            private set
+            {
                 if(value != null)
-                    value.Resize(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+                    value.Resize(GraphicsDevice.Viewport.Width, 
+                        GraphicsDevice.Viewport.Height);
                 RealActiveWindow = value;
             }
         }
@@ -74,10 +79,11 @@ namespace GameManager
             ParticleEmitter = new ParticleEmitter(this);
             Controller = new Controller();
             
-            //RnD: HiDef / IsMouseVisible
-            DeviceManager.GraphicsProfile = GraphicsProfile.HiDef;
+            //RnD: HiDef 
+            DeviceManager.GraphicsProfile = GraphicsProfile.HiDef;//.Reach;
+            DeviceManager.IsFullScreen = false; // set *true* for W10M
             this.IsMouseVisible = true;
-
+            
             Content = new ContentManager(Services);
             Content.RootDirectory = "Content";
 
@@ -90,14 +96,19 @@ namespace GameManager
             base.Initialize();
             Window.ClientSizeChanged += (x, y) => 
             { 
-                Resize(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height); 
+                Resize(GraphicsDevice.Viewport.Width, 
+                    GraphicsDevice.Viewport.Height); 
             };
             Resize(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
+            //RnD
             RasterizerState rs = new RasterizerState{ CullMode = CullMode.None };
+
             GraphicsDevice.RasterizerState = rs;
+
             DepthStencilState ds = new DepthStencilState{ DepthBufferEnable = false };
             GraphicsDevice.DepthStencilState = ds;
+           
          }
 
         protected override void LoadContent()
@@ -157,11 +168,15 @@ namespace GameManager
             sw.Start();
             Level level = new Level(this, identifier);
 
-            level.LoadContent(Content);
-            Game1.Log("Game", "Level loaded in {0}s", sw.ElapsedMilliseconds/100.0f);
+            if (identifier != null)
+            {
+                level.LoadContent(Content);
+                Game1.Log("Game", "Level loaded in {0}s", sw.ElapsedMilliseconds / 100.0f);
+            }
           
             // Pad out load time so that the load screen doesn't just "pop in" for a fraction of a second.
-            while(sw.ElapsedMilliseconds < 1000){
+            while(sw.ElapsedMilliseconds < 1000)
+            {
                 RunOneFrame();
                 //System.Threading.Thread.Sleep(1);
             }

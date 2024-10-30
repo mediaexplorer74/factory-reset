@@ -55,10 +55,14 @@ namespace GameManager
             }
 
             VertexPosition[] vertices = new VertexPosition[triangles.Count];
-            for (int i = 0; i < vertices.Length; i++)
-                vertices[i] = new VertexPosition(new Vector3(triangles[i], 0));
 
-            device.BlendState = BlendState.AlphaBlend;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = new VertexPosition(new Vector3(triangles[i], 0));
+            }
+
+            //RnD
+            //device.BlendState = BlendState.AlphaBlend;
 
             if (TriangleEffect != null)
             {

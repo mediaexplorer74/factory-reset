@@ -1,0 +1,1 @@
+MainPackage=C:\Users\Admin\source\repos\!GameDev\FactoryReset-reset\Src\FactoryReset\bin\WindowsUniversal\ARM\Debug\FactoryReset_1.1.0.0_ARM_Debug.appx

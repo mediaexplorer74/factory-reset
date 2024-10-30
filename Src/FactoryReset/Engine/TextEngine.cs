@@ -250,12 +250,13 @@ namespace GameManager
             {
                 RasterizerState _rasterizerState = new RasterizerState() { ScissorTestEnable = true };
 
-                SpriteBatch.Begin(SpriteSortMode.Deferred, null,
+                SpriteBatch.Begin(SpriteSortMode.Deferred, /*BlendState.Additive,*/null,
                       null, null, _rasterizerState);
             }
             else
             {
-                SpriteBatch.Begin();
+                //SpriteBatch.Begin();
+                SpriteBatch.Begin(SpriteSortMode.Deferred/*, BlendState.Additive*/);
             }
 
             if (Mask.Width != 0)

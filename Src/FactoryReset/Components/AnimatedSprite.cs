@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// AnimatedSprite
+
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 

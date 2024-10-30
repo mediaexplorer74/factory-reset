@@ -44,10 +44,19 @@ namespace GameManager
 
         private void UpdateClampData()
         {
-            float lx = ChunkInFocus.BoundingBox.X;
-            float ly = ChunkInFocus.BoundingBox.Y;
-            float lw = ChunkInFocus.Size.X;
-            float lh = ChunkInFocus.Size.Y;
+            float lx = 0;//ChunkInFocus.BoundingBox.X;
+            float ly = 0;//ChunkInFocus.BoundingBox.Y;
+            float lw = 0;//ChunkInFocus.Size.X;
+            float lh = 0;//ChunkInFocus.Size.Y;
+
+            if (ChunkInFocus != null)
+            {
+                lx = ChunkInFocus.BoundingBox.X;
+                ly = ChunkInFocus.BoundingBox.Y;
+                lw = ChunkInFocus.Size.X;
+                lh = ChunkInFocus.Size.Y;
+            }
+
             float cw = TargetSize.X;
             float ch = TargetSize.Y;
             ChunkClamps = new RectangleF(lx + cw, ly + ch, -2 * cw + lw * 2, -2 * ch + lh * 2);

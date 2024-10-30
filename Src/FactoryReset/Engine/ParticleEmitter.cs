@@ -79,7 +79,8 @@ namespace GameManager
             Game.Transforms.PushView();
             Game.Transforms.ResetView();
 
-            SpriteBatch.Begin();
+            //RnD
+            SpriteBatch.Begin(SpriteSortMode.Deferred);//, BlendState.Additive);
             for (int i = 0; i < Particles.Count; i++)
             {
                 Particles[i].Draw(SpriteBatch);

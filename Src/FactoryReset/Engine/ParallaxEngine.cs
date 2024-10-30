@@ -72,6 +72,8 @@ namespace GameManager
             
             device.SetVertexBuffer(VertexBuffer);
             device.Indices = IndexBuffer;
+
+            //RnD
             device.BlendState = BlendState.AlphaBlend;
             if (Effect != null)
             {

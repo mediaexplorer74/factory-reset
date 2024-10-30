@@ -8,10 +8,7 @@ namespace GameManager
     public class MusicEngine
     {
         public static float Volume = 0.5f;
-
-        private readonly Dictionary<string, Track> SoundCache
-            = new Dictionary<string, Track>();
-
+        private readonly Dictionary<string, Track> SoundCache = new Dictionary<string, Track>();
         private readonly Stack<Track> PlayStack = new Stack<Track>();
         private readonly Game1 Game;
         private ContentManager Content;
@@ -25,16 +22,10 @@ namespace GameManager
             private TimeSpan PauseTime;
             
             private bool IsStopped = true;
-            public bool Stopped 
-            { 
-                get 
-                { 
-                    return IsStopped; 
-                }
-                set 
-                {
-                    if(value == IsStopped) 
-                        return;
+            public bool Stopped { 
+                get { return IsStopped; }
+                set {
+                    if(value == IsStopped) return;
                     IsStopped = value;
                     if (value)
                     {
@@ -44,17 +35,9 @@ namespace GameManager
 
                         //RnD
                         //if(Engine.PlayStack.TryPeek(out var top))
-                        Track top = null;
-                        try
-                        {
-                            top = Engine.PlayStack.Peek();
-                        }
-                        catch { }
-
-                        if (top != null)
-                        {
-                            top.Play();
-                        }
+                        //{
+                        //    top.Play();
+                        //}
                     }
                     else
                     {
@@ -76,6 +59,7 @@ namespace GameManager
                     }
                     else
                     {
+                        //MediaPlayer.Resume();
                         MediaPlayer.Play(Song, PauseTime);
                     }
                 }
@@ -86,7 +70,6 @@ namespace GameManager
                 this.Engine = engine;
                 this.Name = name;
                 this.Song = song;
-
                 if(0 < loopTime)
                     this.LoopTime = new TimeSpan((int)(loopTime*1e-7));
             }
@@ -94,56 +77,34 @@ namespace GameManager
             public void Play()
             {
                 //RnD
-                //if (Engine.PlayStack.TryPeek(out var top))
-                Track top = null;
-                try
+                /*
+                if (Engine.PlayStack.TryPeek(out var top))
                 {
-                    top = Engine.PlayStack.Peek();
-                }
-                catch { }
-
-                if (top != null)
-                {
-                    if (top != this)
+                     if (top != this)
                     {
                         top.Paused = true;
                         Engine.PlayStack.Push(this);
                     }
                 }
                 else
-                {
                     Engine.PlayStack.Push(this);
-                }
-
                 IsStopped = false;
                 IsPaused = false;
-
                 if (PauseTime == null)
-                {
                     MediaPlayer.Play(Song);
-                }
                 else
-                {
                     MediaPlayer.Play(Song, PauseTime);
-                }
-                
+                */
             }
             
             public void Update()
             {
                 if(Paused) return;
                 
-                if
-                ( 
-                Engine.PlayStack.Peek() == this 
-                    && 
-                    Song.Duration <= MediaPlayer.PlayPosition
-                )
+                if(Engine.PlayStack.Peek() == this && Song.Duration <= MediaPlayer.PlayPosition)
                 {
-                    if (LoopTime != null)
-                    {
+                    if(LoopTime != null)
                         MediaPlayer.Play(Song, LoopTime);
-                    }
                     else
                         Stopped = true;
                 }
@@ -168,10 +129,8 @@ namespace GameManager
         public void UnloadContent()
         {
             Clear();
-
             foreach(var entry in SoundCache)
                 entry.Value.Dispose();
-
             SoundCache.Clear();
         }
         
@@ -194,16 +153,13 @@ namespace GameManager
         public Track Play(string name)
         {
             Track track = SoundCache[name];
-
             track.Play();
-
             return track;
         }
         
         public void Clear()
         {
             PlayStack.Clear();
-
             MediaPlayer.Stop();
         }
         
@@ -217,38 +173,18 @@ namespace GameManager
         public void Stop()
         {
             //if(PlayStack.TryPeek(out var top))
-            Track top = null;
-            try
-            {
-                top = PlayStack.Peek();
-            }
-            catch { }
-
-            if (top != null)
-                top.Stopped = true;
+            //    top.Stopped = true;
         }
         
         public bool Paused
         {
-            get 
-            { 
-                return PlayStack.Count == 0 || PlayStack.Peek().Paused; 
-            }
+            get { return PlayStack.Count == 0 || PlayStack.Peek().Paused; }
             set {
                 //RnD
                 //if(PlayStack.TryPeek(out var top))
-                Track top = null;
-
-                try
-                {
-                    top = PlayStack.Peek();
-                }
-                catch { }
-
-                if (top != null)
-                {
-                    top.Paused = value;
-                }
+                //{
+                //    top.Paused = value;
+                //}
             }
         }
     }

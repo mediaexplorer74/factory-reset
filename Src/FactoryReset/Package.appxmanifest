@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="ME.FactoryResetV1" Publisher="CN=Admin" Version="1.0.37.0" />
-  <mp:PhoneIdentity PhoneProductId="933ecf61-716f-4f25-99f3-4c83136d2326" PhonePublisherId="50023446-1661-4035-3033-300280350326" />
+  <Identity Name="ME.FactoryResetV1p1" Publisher="CN=Admin" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="933ecf62-716f-4f25-99f3-4c83136d2326" PhonePublisherId="50023446-1662-4035-3033-300280350326" />
   <Properties>
-    <DisplayName>Factory Reset v1.0.37</DisplayName>
+    <DisplayName>Factory Reset v1.1</DisplayName>
     <PublisherDisplayName>mediaexplorer</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FactoryReset.App">
-      <uap:VisualElements DisplayName="Factory Reset 1.0" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Game project" BackgroundColor="#464646">
+      <uap:VisualElements DisplayName="Factory Reset 1.1" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Factory Reset  Game project" BackgroundColor="#464646">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallLogo.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
@@ -25,7 +25,8 @@
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/>
           <uap:Rotation Preference="portrait"/>
-          <uap:Rotation Preference="landscapeFlipped"/></uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

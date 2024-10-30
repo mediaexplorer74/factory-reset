@@ -1,11 +1,6 @@
-#if OPENGL
-    #define SV_POSITION POSITION
-    #define VS_SHADERMODEL vs_3_0
-    #define PS_SHADERMODEL ps_3_0
-#else
-    #define VS_SHADERMODEL vs_4_0
-    #define PS_SHADERMODEL ps_4_0
-#endif
+//#define SV_POSITION POSITION
+#define VS_SHADERMODEL vs_4_0
+#define PS_SHADERMODEL ps_4_0
 
 Texture2D parallax;
 float2 viewSize;
@@ -14,14 +9,14 @@ float viewScale;
 
 struct VertexShaderInput
 {
-    float4 Position : POSITION0;
-    float2 UV : TEXCOORD0;
+    float4 Position : POSITION;
+    float2 UV : TEXCOORD;
 };
 
 struct VertexShaderOutput
 {
-    float4 Position : SV_POSITION;
-    float2 mapCoord : TEXCOORD0;
+    float4 Position : POSITION; //SV_POSITION;
+    float2 mapCoord : TEXCOORD;
 };
 
 VertexShaderOutput MainVS(in VertexShaderInput input)
@@ -36,7 +31,7 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
     return output;
 }
 
-float4 MainPS(VertexShaderOutput input) : COLOR0
+float4 MainPS(VertexShaderOutput input) : COLOR
 {
     uint w, h;
     parallax.GetDimensions(w, h);

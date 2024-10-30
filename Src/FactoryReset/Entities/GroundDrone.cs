@@ -175,14 +175,8 @@ namespace GameManager
                     && chunk.Level.Player.DeathTimer <= 0
                     && GetBoundingBox().Intersects(chunk.Level.Player.GetBoundingBox()))
                 {
-                    //DEBUG
                     chunk.Level.Alarm.Detected = false;
                     //chunk.Level.Player.Kill();
-                    Game.TextEngine.QueueText("AERIAL DRONE: kill", /*Camera.GetTargetSize()*/
-                        new Vector2(200, 200)
-                    + Vector2.UnitY * 100, 40, Color.DarkBlue,
-                    TextEngine.Orientation.Center, TextEngine.Orientation.Center);
-                    Game.TextEngine.DrawText();
                 }
             }
             
