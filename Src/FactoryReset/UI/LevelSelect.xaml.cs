@@ -94,7 +94,8 @@ namespace GameManager.UI
                 }
             }
                 
-            foreach (var level in UnsortedPreviews){
+            foreach (var level in UnsortedPreviews)
+            {
                 Previews.Add(level);
             }
             LevelList.SelectedIndex = 0;

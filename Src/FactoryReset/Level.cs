@@ -216,7 +216,7 @@ namespace GameManager
             Camera.Update();
             Alarm.LoadContent(content);
 
-            Game.MusicEngine.Load("Ambient", "future ambient", 12);
+            Game.MusicEngine.Load("Ambient", "future ambient", /*12*/24);
             Game.MusicEngine.Play("Ambient");
             Game.SoundEngine.Load("UI_Button");
             Game.SoundEngine.Load("Player_WalkieEnd");
@@ -493,7 +493,7 @@ namespace GameManager
                 Game.TriangleEngine.DrawTriangles(Camera.Position, 
                     OverlayTriangles, new Color(0,0,0,alpha));
 
-                if(Player.DeathTimer > 0 || FallFadeTimer > 0)
+                /*if(Player.DeathTimer > 0 || FallFadeTimer > 0)
                 {
                     //DEBUG
                     Game.TextEngine.QueueText("Try not dying", Camera.GetTargetSize() 
@@ -508,7 +508,7 @@ namespace GameManager
                     +Vector2.UnitY * 100, 40, Color.DarkGreen,//new Color(alpha * 139 / 255F, 0, 0, alpha),
                     TextEngine.Orientation.Center, TextEngine.Orientation.Center);
                     Game.TextEngine.DrawText();
-                }
+                }*/
             }
         }
         
