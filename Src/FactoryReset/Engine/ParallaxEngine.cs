@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using GameManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,29 +13,29 @@ namespace GameManager
         private VertexBuffer VertexBuffer;
         private IndexBuffer IndexBuffer;
         private Effect Effect;
-        public float ParallaxStrength = 2.0f/3.0f;
+        public float ParallaxStrength = 2.0f / 3.0f;
         public float BackgroundScale = 2.0f;
 
         public ParallaxEngine(Game1 game)
         {
             Game = game;
         }
-        
+
         public void LoadContent(ContentManager content)
         {
-            VertexPositionTexture[] vertices = new VertexPositionTexture[] 
-            { 
+            VertexPositionTexture[] vertices = new VertexPositionTexture[]
+            {
                 new VertexPositionTexture(new Vector3(+1, -1, 0), new Vector2(1, 0)),
                 new VertexPositionTexture(new Vector3(-1, -1, 0), new Vector2(0, 0)),
                 new VertexPositionTexture(new Vector3(-1, +1, 0), new Vector2(0, 1)),
                 new VertexPositionTexture(new Vector3(+1, +1, 0), new Vector2(1, 1))
             };
-            VertexBuffer = new VertexBuffer(Game.GraphicsDevice, VertexPositionTexture.VertexDeclaration, 
+            VertexBuffer = new VertexBuffer(Game.GraphicsDevice, VertexPositionTexture.VertexDeclaration,
                                             vertices.Length, BufferUsage.None);
-            
+
             VertexBuffer.SetData(vertices);
             short[] indices = new short[] { 0, 1, 2, 2, 3, 0 };
-            IndexBuffer = new IndexBuffer(Game.GraphicsDevice, typeof(short), 
+            IndexBuffer = new IndexBuffer(Game.GraphicsDevice, typeof(short),
                                           indices.Length, BufferUsage.None);
             IndexBuffer.SetData(indices);
 
@@ -45,10 +46,16 @@ namespace GameManager
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("[ex] ParallaxEngine - Load Parallax Effect error: " + ex.Message);
+                // Safe fallback
+                Effect = new BasicEffect(Game.GraphicsDevice)
+                {
+                    TextureEnabled = true,
+                    VertexColorEnabled = false
+                };
+                Debug.WriteLine("[ex] ParallaxEngine: " + ex.Message);
             }
         }
-        
+
         public void UnloadContent()
         {
             VertexBuffer.Dispose();
@@ -60,26 +67,21 @@ namespace GameManager
         {
             GraphicsDevice device = Game.GraphicsDevice;
 
-            if (Effect != null)
-            {
-                Effect.CurrentTechnique = Effect.Techniques["Tile"];
-                Effect.Parameters["viewSize"].SetValue(new Vector2(
-                    device.Viewport.Width, device.Viewport.Height));
-                Effect.Parameters["viewPos"].SetValue(position / ParallaxStrength);
-                Effect.Parameters["viewScale"].SetValue(scale * BackgroundScale);
-                Effect.Parameters["parallax"].SetValue(parallax);
-            }
-            
+            Effect.CurrentTechnique = Effect.Techniques["Tile"];
+            Effect.Parameters["viewSize"].SetValue(new Vector2(device.Viewport.Width, device.Viewport.Height));
+            Effect.Parameters["viewPos"].SetValue(position / ParallaxStrength);
+            Effect.Parameters["viewScale"].SetValue(scale * BackgroundScale);
+            Effect.Parameters["parallax"].SetValue(parallax);
+            // Provide texture dimensions (in pixels) for UV normalization in shader
+            Effect.Parameters["parallaxSize"].SetValue(new Vector2(parallax.Width, parallax.Height));
+
             device.SetVertexBuffer(VertexBuffer);
             device.Indices = IndexBuffer;
             device.BlendState = BlendState.AlphaBlend;
-            if (Effect != null)
+            foreach (EffectPass pass in Effect.CurrentTechnique.Passes)
             {
-                foreach (EffectPass pass in Effect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 2);
-                }
+                pass.Apply();
+                device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 2);
             }
         }
     }

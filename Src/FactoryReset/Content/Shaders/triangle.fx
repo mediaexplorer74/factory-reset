@@ -1,11 +1,7 @@
-#if OPENGL
-    #define SV_POSITION POSITION
-    #define VS_SHADERMODEL vs_3_0
-    #define PS_SHADERMODEL ps_3_0
-#else
-    #define VS_SHADERMODEL vs_4_0
-    #define PS_SHADERMODEL ps_4_0
-#endif
+// Target feature level 9_1 for Reach profile on DirectX
+#define VS_SHADERMODEL vs_4_0_level_9_1
+#define PS_SHADERMODEL ps_4_0_level_9_1
+//#define SV_POSITION POSITION0
 
 float4x4 projectionMatrix;
 float4x4 viewMatrix;
@@ -14,8 +10,7 @@ float4 color;
 
 struct VertexShaderInput
 {
-   float4 Position : POSITION0;
-   uint VertexID: SV_VertexID;
+    float4 Position : POSITION0;
 };
 
 struct VertexShaderOutput
@@ -25,7 +20,7 @@ struct VertexShaderOutput
 
 VertexShaderOutput MainVS(in VertexShaderInput input)
 {
-    VertexShaderOutput output = (VertexShaderOutput)0;
+    VertexShaderOutput output = (VertexShaderOutput) 0;
 
     float4 pos = input.Position;
 

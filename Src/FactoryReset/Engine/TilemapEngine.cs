@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace GameManager
 {
@@ -15,70 +14,62 @@ namespace GameManager
         private VertexBuffer VertexBuffer;
         private IndexBuffer IndexBuffer;
         private Effect TileEffect;
-        public Texture2D SolidSet {get; private set;}
-        
+        public Texture2D SolidSet { get; private set; }
+
         public TilemapEngine(Game1 game)
         {
             Game = game;
         }
-        
+
         public void LoadContent(ContentManager content)
         {
             Content = content;
-            VertexPositionTexture[] vertices = new VertexPositionTexture[] 
-            { 
+            VertexPositionTexture[] vertices = new VertexPositionTexture[]
+            {
                 new VertexPositionTexture(new Vector3(+1, -1, 0), new Vector2(1, 0)),
                 new VertexPositionTexture(new Vector3(-1, -1, 0), new Vector2(0, 0)),
                 new VertexPositionTexture(new Vector3(-1, +1, 0), new Vector2(0, 1)),
                 new VertexPositionTexture(new Vector3(+1, +1, 0), new Vector2(1, 1))
             };
-            VertexBuffer = new VertexBuffer(Game.GraphicsDevice, VertexPositionTexture.VertexDeclaration, 
+            VertexBuffer = new VertexBuffer(Game.GraphicsDevice, VertexPositionTexture.VertexDeclaration,
                                             vertices.Length, BufferUsage.None);
-            
+
             VertexBuffer.SetData(vertices);
             short[] indices = new short[] { 0, 1, 2, 2, 3, 0 };
-            IndexBuffer = new IndexBuffer(Game.GraphicsDevice, typeof(short), 
+            IndexBuffer = new IndexBuffer(Game.GraphicsDevice, typeof(short),
                                           indices.Length, BufferUsage.None);
             IndexBuffer.SetData(indices);
 
             // Create shader
-            try
-            {
-                TileEffect = content.Load<Effect>("Shaders/tile");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("[ex] TilemapEngine - Load Effect error: " + ex.Message);
-            }
-
+            TileEffect = content.Load<Effect>("Shaders/tile");
             SolidSet = CreateChunkTileset();
         }
-        
+
         public void UnloadContent()
         {
             VertexBuffer.Dispose();
             IndexBuffer.Dispose();
             TileEffect.Dispose();
         }
-        
+
         public Texture2D CreateChunkTileset()
         {
-            Texture2D tex = new Texture2D(Game.GraphicsDevice, 256*Chunk.TileSize, 256*Chunk.TileSize);
-            Color[] data = new Color[tex.Width*tex.Height];
+            Texture2D tex = new Texture2D(Game.GraphicsDevice, 256 * Chunk.TileSize, 256 * Chunk.TileSize);
+            Color[] data = new Color[tex.Width * tex.Height];
             // Clear to empty
-            for(int i=0; i<data.Length; ++i)
+            for (int i = 0; i < data.Length; ++i)
             {
                 data[i] = new Color(0);
             }
             // Set colors at own positions.
             uint[] colors = (uint[])System.Enum.GetValues(typeof(Chunk.Colors));
-            foreach(uint c in colors)
+            foreach (uint c in colors)
             {
                 uint r = (c & 0x000000FF) >> 0;
                 uint g = (c & 0x0000FF00) >> 8;
-                for(uint x=r*Chunk.TileSize; x<(r+1)*Chunk.TileSize; ++x)
+                for (uint x = r * Chunk.TileSize; x < (r + 1) * Chunk.TileSize; ++x)
                 {
-                    for(uint y=g*Chunk.TileSize; y<(g+1)*Chunk.TileSize; ++y)
+                    for (uint y = g * Chunk.TileSize; y < (g + 1) * Chunk.TileSize; ++y)
                     {
                         if (c != (uint)Chunk.Colors.Pickup)
                         {
@@ -87,7 +78,7 @@ namespace GameManager
                     }
                 }
             }
-        
+
             tex.SetData(data);
             return tex;
         }
@@ -108,7 +99,7 @@ namespace GameManager
                 tex.SaveAsPng(stream, tex.Width, tex.Height);
             }
         }
-        
+
         /// <summary>
         ///   Render the given tilemap using the tileset atlas.xs
         /// </summary>
@@ -120,29 +111,27 @@ namespace GameManager
             Game.Transforms.Translate(pos);
             GraphicsDevice device = Game.GraphicsDevice;
 
-            if (TileEffect != null)
-            {
-                TileEffect.CurrentTechnique = TileEffect.Techniques["Tile"];
-                TileEffect.Parameters["viewSize"].SetValue(
-                    new Vector2(device.Viewport.Width, device.Viewport.Height));
-                TileEffect.Parameters["viewMatrix"].SetValue(Matrix.Invert(Game.Transforms.ViewMatrix));
-                TileEffect.Parameters["modelMatrix"].SetValue(Matrix.Invert(Game.Transforms.ModelMatrix));
-                TileEffect.Parameters["tileSize"].SetValue(Chunk.TileSize);
-                TileEffect.Parameters["tilemap"].SetValue(tilemap);
-                TileEffect.Parameters["tileset"].SetValue(tileset);
-            }
-            
+            TileEffect.CurrentTechnique = TileEffect.Techniques["Tile"];
+            TileEffect.Parameters["viewSize"].SetValue(new Vector2(device.Viewport.Width, device.Viewport.Height));
+            TileEffect.Parameters["viewMatrix"].SetValue(Matrix.Invert(Game.Transforms.ViewMatrix));
+            TileEffect.Parameters["modelMatrix"].SetValue(Matrix.Invert(Game.Transforms.ModelMatrix));
+            TileEffect.Parameters["tileSize"].SetValue(Chunk.TileSize);
+
+            TileEffect.Parameters["tilemap"].SetValue(tilemap);
+            // Provide tilemap dimensions (in pixels) for UV normalization in shader
+            TileEffect.Parameters["tilemapSize"].SetValue(new Vector2(tilemap.Width, tilemap.Height));
+
+            TileEffect.Parameters["tileset"].SetValue(tileset);
+            // Provide tileset dimensions (in pixels) for UV normalization in shader
+            TileEffect.Parameters["tilesetSize"].SetValue(new Vector2(tileset.Width, tileset.Height));
+
             device.SetVertexBuffer(VertexBuffer);
             device.Indices = IndexBuffer;
             device.BlendState = BlendState.AlphaBlend;
-
-            if (TileEffect != null)
+            foreach (EffectPass pass in TileEffect.CurrentTechnique.Passes)
             {
-                foreach (EffectPass pass in TileEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 2);
-                }
+                pass.Apply();
+                device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 2);
             }
             Game.Transforms.Pop();
         }
