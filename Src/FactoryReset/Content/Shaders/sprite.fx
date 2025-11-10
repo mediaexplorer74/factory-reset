@@ -1,3 +1,4 @@
+// Target feature level9_1 for Reach profile on DirectX
 #define VS_SHADERMODEL vs_4_0_level_9_1
 #define PS_SHADERMODEL ps_4_0_level_9_1
 
@@ -7,7 +8,7 @@ float4x4 modelMatrix;
 float4 offset;
 Texture2D tileset;
 SamplerState tilesetSampler;
-float2 tilesetSize; // width,height in pixels of the tileset texture (set from C#)
+float2 tilesetSize; // width,height in pixels of the tileset texture (passed from engine)
 
 struct VertexShaderInput
 {

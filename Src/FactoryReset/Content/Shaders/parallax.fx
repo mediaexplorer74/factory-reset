@@ -2,13 +2,12 @@
 #define VS_SHADERMODEL vs_4_0_level_9_1
 #define PS_SHADERMODEL ps_4_0_level_9_1
 
-//sampler2D parallax;
 Texture2D parallax;
 SamplerState tileSampler;
 
 float2 viewSize;
 float2 viewPos;
-float viewScale;
+float viewScale; 
 float2 parallaxSize; // passed from engine, replaces GetDimensions usage
 
 struct VertexShaderInput
@@ -48,8 +47,6 @@ float4 MainPS(VertexShaderOutput input) : COLOR0
     mapXY.x = abs(mapXY.x) % mapWH.x;
     mapXY.y = clamp(mapXY.y, 0, mapWH.y - 1);
  
-    // Use tex2D with sampler2D for compatibility
-    //return tex2D(parallax, float2(mapXY) / float2(mapWH)); 
     //return parallax.Load(int3(mapXY, 0));
     return parallax.Sample(tileSampler, float2(mapXY) / float2(mapWH));
 }

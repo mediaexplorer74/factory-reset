@@ -70,7 +70,9 @@ namespace GameManager
             Effect.CurrentTechnique = Effect.Techniques["Tile"];
             Effect.Parameters["viewSize"].SetValue(new Vector2(device.Viewport.Width, device.Viewport.Height));
             Effect.Parameters["viewPos"].SetValue(position / ParallaxStrength);
+
             Effect.Parameters["viewScale"].SetValue(scale * BackgroundScale);
+            
             Effect.Parameters["parallax"].SetValue(parallax);
             // Provide texture dimensions (in pixels) for UV normalization in shader
             Effect.Parameters["parallaxSize"].SetValue(new Vector2(parallax.Width, parallax.Height));

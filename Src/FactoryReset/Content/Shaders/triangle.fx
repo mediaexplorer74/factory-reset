@@ -1,7 +1,6 @@
 // Target feature level 9_1 for Reach profile on DirectX
 #define VS_SHADERMODEL vs_4_0_level_9_1
 #define PS_SHADERMODEL ps_4_0_level_9_1
-//#define SV_POSITION POSITION0
 
 float4x4 projectionMatrix;
 float4x4 viewMatrix;

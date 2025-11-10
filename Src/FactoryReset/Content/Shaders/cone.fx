@@ -1,15 +1,11 @@
-#if OPENGL
-    #define SV_POSITION POSITION
-    #define VS_SHADERMODEL vs_3_0
-    #define PS_SHADERMODEL ps_3_0
-#else
-    #define VS_SHADERMODEL vs_4_0_level_9_1
-    #define PS_SHADERMODEL ps_4_0_level_9_1
-#endif
+// Target feature level9_1 for Reach profile on DirectX
+#define VS_SHADERMODEL vs_4_0_level_9_1
+#define PS_SHADERMODEL ps_4_0_level_9_1
 
 float4x4 projectionMatrix;
 float4x4 viewMatrix;
 float4x4 modelMatrix;
+
 // Removed dynamic vertex generation for Reach profile compatibility
 // Parameters retained for potential future use
 float2 angles;

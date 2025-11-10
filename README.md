@@ -1,4 +1,4 @@
-# FactoryReset v1.3.0 alpha - dev branch
+# FactoryReset v1.3.2 alpha - dev branch
 ![FactoryResetLogo](Images/logo.png)
 
 ## About
@@ -13,19 +13,15 @@ The main goal is reset some "futuristic" factory. I try to block unhappy game en
 ![](Images/sshot03.png)
 
 ## What's new?
-- Futuristic (but semi-operational!) "2099 year" atmosphere (animated walls, trancparancy and 2.5-effects)
-- New, experimental music theme
-- New level "Cityscape" :)
-- Potencial compatibility with poor Lumia smartphones (i.e., L640) 
+- Futuristic "2099 year" atmosphere (strange "animated walls" effects so cool)
+- Compatibility with poor Lumia smartphones (i.e., L640 with W10M 15063) 
 
 ## Tech. details
-- UWP + 10240 Windows SDK & Monogame 3.8 support added 
-- I switched from Hi-Def profile to Reach profile (at now, testure/shader xnb files are reach-compatible!)  
-- TouchPanel control realized so-so 
+- UWP + 10240 Windows SDK & Monogame 3.8 support added (but W10M 14393/15063 highly recommended!)
+- I switched from Hi-Def profile to Reach profile (at now, texture/shader xnb files are reach-compatible!)  
+- TouchPanel control realized so-so (great Astoria tech. problems)
 - Damaged tile.fx shader suddenly generated "2099 year" atmosphere (I specially leave this fun bug!)
-- Low-power mobile devices not supported (some hardware problems!), only *Lumia 950/XL* accepted!
 - Half-Godmode enabled (enemy attacks *ignored*, but you may *loose life* after some bad move)))
-
 
 ## A few words about Idea & Design 
 A 2D stealth action platformer with hand-crafted pixel-art animation. 
@@ -33,18 +29,20 @@ Made for the 2019 Games Programming Laboratory at ETH. A original game trailer c
 
 ## Controlling via TouchPanel
 - Swipe left/right/up/down: move left/right/up/down
-- Tap (screen): jump (or skip long mom-dauther dialogs)))
+- Tap (screen): jump (& skip long mom-dauther dialogs too)
 - Double swipe down: hide
 - Double swipe left: back 
 - Double swipe right: open the door
 - Double swipe up: call mom 
 - Three-finger multi-touch: pause / menu
 
+## Known bugs
+- On L640 (W10M 10240/Astoria) this game halts at start.
+
 ## TODO
-- Test this build on my real Lumias 640 (W10M 15063) & 640 (W10M 10240/Astoria)
-- Add src content (all png, sounds, etc.) 
-- Fix tile.fx shader!
-- Add custom levers load&run function 
+- Tweak tile.fx shader for more smooth screen runs/movings :)
+- Add custom levels load&run function  
+- Try to switch on/to my custom Monogame "repo" (Astoria need it) 
 
 ## References
 - https://shinmera.itch.io/factory-reset Original Factory Reset game (uwp for x64 Windows PC x64)

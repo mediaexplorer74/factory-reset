@@ -73,9 +73,9 @@ namespace GameManager
             ParallaxEngine = new ParallaxEngine(this);
             ParticleEmitter = new ParticleEmitter(this);
             Controller = new Controller();
-            
+
             //RnD: HiDef / IsMouseVisible
-            DeviceManager.GraphicsProfile = GraphicsProfile.HiDef;
+            DeviceManager.GraphicsProfile = GraphicsProfile.Reach;//.HiDef;
             this.IsMouseVisible = true;
 
             Content = new ContentManager(Services);
