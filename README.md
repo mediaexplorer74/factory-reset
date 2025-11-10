@@ -1,4 +1,4 @@
-# FactoryReset v1.3.0 - dev branch
+# FactoryReset v1.3.0 alpha - dev branch
 ![FactoryResetLogo](Images/logo.png)
 
 ## About
